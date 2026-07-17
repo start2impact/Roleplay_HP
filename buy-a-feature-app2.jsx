@@ -1595,7 +1595,7 @@
           React.createElement("div", null,
             React.createElement("div", { className: "baf-sp-name" }, "Aster"),
             React.createElement("div", { className: "baf-sp-title" }, "Modalità speciale · recupera punti"))),
-        React.createElement("p", { className: "baf-sp-intro" }, "Sei uscito dalle fiamme quasi a mani vuote: solo ", React.createElement("b", null, "40 punti"), " di base. Rispondi a queste domande e recupererai fino a ", React.createElement("b", null, "200 punti"), " per ricostruire la casa."),
+        React.createElement("p", { className: "baf-sp-intro" }, "Sei uscito dalle fiamme quasi a mani vuote: parti da ", React.createElement("b", null, "40 punti"), " di base. Ogni risposta ti fa recuperare ", React.createElement("b", null, "+" + SPECIAL_STEP + " pt"), ": rispondi a tutte e arrivi fino a ", React.createElement("b", null, (40 + SPECIAL_QS.length * SPECIAL_STEP) + " pt"), " di budget per ricostruire la casa."),
         React.createElement("div", { className: "baf-sp-body" },
           SPECIAL_QS.map((q, qi) => React.createElement("div", { key: q.id, className: "baf-sp-q" + (answers[q.id] != null ? " done" : "") },
             React.createElement("div", { className: "baf-sp-qh" },
@@ -1607,7 +1607,7 @@
         React.createElement("div", { className: "baf-sp-foot" },
           React.createElement("div", { className: "baf-sp-tot" },
             React.createElement(DSIcon, { name: "credit-card", size: 16 }),
-            React.createElement("span", null, "Budget: ", React.createElement("b", null, points), " / 200 pt")),
+            React.createElement("span", null, "Budget: ", React.createElement("b", null, points), " / ", (40 + SPECIAL_QS.length * SPECIAL_STEP), " pt")),
           React.createElement("button", { type: "button", className: "baf-cta baf-sp-go", onClick: onClose }, answered ? "Entra nel negozio" : "Salta e entra"))));
   }
 
@@ -2088,7 +2088,7 @@
         React.createElement("p", { className: "baf-aster-note" }, "Ogni cosa lasciata ti fa recuperare punti, e se aggiungi una prova a supporto guadagni +5 pt.")),
       buy: React.createElement(React.Fragment, null,
         React.createElement("strong", { className: "baf-aster-title" }, "Il negozio è aperto"),
-        React.createElement("p", null, "Hai ", React.createElement("b", null, total, " pt"), ": 40 di base + " + cassa + " recuperati dalle fiamme."),
+        React.createElement("p", null, "Hai ", React.createElement("b", null, total, " pt"), ": 40 di base + " + (cassa + bonusPoints) + " recuperati."),
         React.createElement("p", { className: "baf-aster-note" }, "Apri una riga per scoprire cosa fa. Compra e rivendi finché non torna il progetto.")),
       custom: React.createElement(React.Fragment, null,
         React.createElement("strong", { className: "baf-aster-title" }, "Manca qualcosa?"),
@@ -2116,7 +2116,7 @@
         React.createElement("div", { className: "num" }, React.createElement("span", { className: "big" }, React.createElement(AnimatedNumber, { value: left })), " / ", total, " pt"),
         React.createElement("div", { className: "meter" }, React.createElement("i", { style: { width: (total ? (spent / total) * 100 : 0) + "%" } })),
         // il budget scarseggia: proprio accanto al counter compare il recupero punti
-        (step === "buy" && left < 20 && bonusPoints < SPECIAL_QS.length * SPECIAL_STEP)
+        (step === "buy" && cassa === 0 && left < 20 && bonusPoints < SPECIAL_QS.length * SPECIAL_STEP)
           ? React.createElement("button", { type: "button", className: "baf-rail-recover", onClick: () => setSpecialOpen(true) },
               React.createElement(DSIcon, { name: "gem", size: 13 }), "Punti quasi finiti? Recuperane altri")
           : null);
