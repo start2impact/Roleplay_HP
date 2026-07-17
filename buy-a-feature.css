@@ -586,7 +586,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-dv-imgwrap { padding: 18px 18px 0; }
 .baf-dv-cbody { padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 13px; }
 .baf-dv-head { display: flex; align-items: center; gap: 11px; }
-.baf-dv-name { font-size: var(--h5); color: var(--greyscale-dark); line-height: 1.1; }
+.baf-dv-name { font-size: var(--h5); font-weight: 800; color: var(--greyscale-dark); line-height: 1.1; }
 .baf-dv-real { font-size: var(--paragraph-span3); color: var(--greyscale-mid); margin-top: 2px; }
 .baf-dv-q { font-size: var(--paragraph-span1); color: var(--greyscale-dark); font-weight: var(--weight-semibold); }
 .baf-dv-actions { display: flex; gap: 10px; }
@@ -2141,7 +2141,10 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-story-shot .hint { position: absolute; left: 50%; bottom: -16px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 7px 14px; border-radius: 99px; background: rgba(255,255,255,0.94); color: #1A1A2E; font-family: var(--font-paragraph); font-weight: 700; font-size: 12px; box-shadow: 0 8px 22px rgba(0,0,0,0.4); }
 @media (max-width: 680px) { .baf-story-shot { width: 80vw; } }
 /* beat 4: la stessa Home, trasparente nel cielo, che va a fuoco */
-.baf-story-shot-burn { cursor: default; pointer-events: none; opacity: 0.5; animation: baf-story-fade 1.2s ease-out; }
+/* beat 4/5: la Home in fiamme entra solo in dissolvenza, senza spostarsi
+   (niente translate nell'animazione, così resta fissa nella posizione finale) */
+.baf-story-shot-burn { cursor: default; pointer-events: none; opacity: 0.5; animation: baf-shot-burn-in 1.2s ease-out; }
+@keyframes baf-shot-burn-in { from { opacity: 0; } to { opacity: 0.5; } }
 .baf-story-shot-burn img { border-color: rgba(255,214,170,0.35); filter: sepia(0.35) saturate(1.1) brightness(0.92); }
 .baf-story-shot-burn .burnveil { position: absolute; inset: 0; border-radius: 12px; background: linear-gradient(15deg, rgba(255,110,40,0.55), rgba(255,170,60,0.18) 45%, transparent 75%); mix-blend-mode: screen; }
 .baf-story-shot-burn .flames { position: absolute; left: 0; right: 0; bottom: -8px; height: 46%; pointer-events: none; }
@@ -2156,23 +2159,32 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 /* beat 5: Aster protagonista — figura grande al centro, luce tutta sua */
 .baf-story-aster { position: absolute; left: 50%; bottom: 26%; transform: translateX(-50%); z-index: 6; display: flex; align-items: flex-end; justify-content: center; animation: baf-aster-arrive 1.4s cubic-bezier(0.22,0.61,0.36,1); }
 .baf-story-aster .cat { position: relative; z-index: 2; display: block; width: 90px; height: 116px; animation: baf-genio-idle 3.4s ease-in-out infinite; }
-.baf-story-aster .cat .dot { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; border-radius: 99px; background: radial-gradient(circle at 38% 30%, #232a3d 0%, #0b0d12 62%); box-shadow: 0 12px 30px rgba(6,16,48,0.65), 0 0 24px rgba(140,185,255,0.45); }
-.baf-story-aster .cat .ring { position: absolute; top: 4px; left: calc(50% - 36px); width: 72px; height: 22px; border-radius: 99px; background: radial-gradient(ellipse, #eaf2ff, rgba(150,190,255,0.85) 55%, transparent 78%); box-shadow: 0 0 26px rgba(120,170,255,0.95); animation: baf-torch 1.8s ease-in-out infinite alternate; }
-.baf-story-aster .halo { position: absolute; left: 50%; bottom: -6%; transform: translateX(-50%); width: min(40vh, 340px); height: min(40vh, 340px); border-radius: 99px; background: radial-gradient(circle, rgba(165,200,255,0.6) 0%, rgba(120,165,255,0.3) 42%, transparent 70%); animation: baf-aster-halo 2.8s ease-in-out infinite alternate; pointer-events: none; }
-.baf-story-aster .beam { position: absolute; left: 50%; bottom: 10%; transform: translateX(-50%); width: min(22vh, 190px); height: 70vh; background: linear-gradient(180deg, transparent 0%, rgba(190,215,255,0.24) 45%, rgba(190,215,255,0.42) 100%); clip-path: polygon(38% 0%, 62% 0%, 100% 100%, 0% 100%); pointer-events: none; }
-.baf-story-aster .sp { position: absolute; z-index: 3; width: 9px; height: 9px; border-radius: 99px; background: #eaf2ff; box-shadow: 0 0 12px rgba(190,215,255,0.95); animation: baf-aster-sp 2.2s ease-in-out infinite; }
-.baf-story-aster .sp1 { left: 8%; top: 22%; }
-.baf-story-aster .sp2 { right: 4%; top: 38%; animation-delay: -0.7s; }
-.baf-story-aster .sp3 { left: 16%; bottom: 12%; animation-delay: -1.4s; }
+.baf-story-aster .cat .dot { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; border-radius: 99px; background: radial-gradient(circle at 38% 30%, #232a3d 0%, #0b0d12 62%); box-shadow: 0 12px 30px rgba(6,16,48,0.5); }
+.baf-story-aster .cat .ring { position: absolute; top: 4px; left: calc(50% - 36px); width: 72px; height: 22px; border-radius: 99px; background: radial-gradient(ellipse, #eaf2ff, rgba(150,190,255,0.85) 55%, transparent 78%); animation: baf-torch 1.8s ease-in-out infinite alternate; }
+/* aura morbida attorno alla sfera (niente fascio di luce alto) */
+.baf-story-aster .aura { position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%); width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(150,190,255,0.6) 0%, rgba(120,165,255,0.28) 46%, transparent 70%); z-index: 1; pointer-events: none; animation: baf-aster-halo 2.8s ease-in-out infinite alternate; }
+/* cerchio di luce blu sotto Aster */
+.baf-story-aster .floor { position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%); width: 160px; height: 46px; border-radius: 50%; background: radial-gradient(ellipse, rgba(120,175,255,0.9) 0%, rgba(90,150,255,0.42) 46%, transparent 72%); filter: blur(2px); z-index: 1; pointer-events: none; animation: baf-aster-floor 2.8s ease-in-out infinite alternate; }
+@keyframes baf-aster-floor { from { opacity: 0.75; transform: translateX(-50%) scaleX(0.94); } to { opacity: 1; transform: translateX(-50%) scaleX(1.06); } }
+/* scintille attorno alla sfera */
+.baf-story-aster .sp { position: absolute; z-index: 3; width: 8px; height: 8px; border-radius: 99px; background: #eaf2ff; box-shadow: 0 0 10px rgba(190,215,255,0.95); animation: baf-aster-sp 2.2s ease-in-out infinite; }
+.baf-story-aster .sp1 { left: 4%; top: 30%; }
+.baf-story-aster .sp2 { right: 2%; top: 42%; animation-delay: -0.6s; }
+.baf-story-aster .sp3 { left: 14%; bottom: 20%; animation-delay: -1.1s; }
+.baf-story-aster .sp4 { right: 14%; top: 20%; animation-delay: -1.6s; }
+.baf-story-aster .sp5 { left: 50%; top: 6%; animation-delay: -0.3s; }
+@keyframes baf-aster-sp { 0%, 100% { opacity: 0.2; transform: scale(0.6); } 50% { opacity: 1; transform: scale(1.15); } }
 @keyframes baf-aster-arrive { from { opacity: 0; transform: translateX(-50%) translateY(60px) scale(0.7); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
 @keyframes baf-aster-halo { from { opacity: 0.75; transform: translateX(-50%) scale(0.94); } to { opacity: 1; transform: translateX(-50%) scale(1.06); } }
 @keyframes baf-aster-sp { 0%, 100% { opacity: 0.25; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.15); } }
 /* con Aster in scena, tutto il resto si spegne: lui è il protagonista */
 .baf-story-i4 .baf-fhouse, .baf-story-i4 .baf-bghouses, .baf-story-i4 .baf-groundfires, .baf-story-i4 .baf-walker, .baf-story-i4 .baf-trees, .baf-story-i4 .baf-mountains { filter: brightness(0.5) saturate(0.45); }
-@media (prefers-reduced-motion: reduce) { .baf-story-aster, .baf-story-aster .cat, .baf-story-aster .cat .ring, .baf-story-aster .halo, .baf-story-aster .sp, .baf-story-shot-burn .flames i { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .baf-story-aster, .baf-story-aster .cat, .baf-story-aster .cat .ring, .baf-story-aster .floor, .baf-story-shot-burn .flames i { animation: none; } }
 /* beat 2: la casa si fa piccola, lo screen della Home è il protagonista */
 .baf-story-i1 .baf-fhouse { transform: translateX(-50%) scale(0.45); opacity: 0.9; }
-.baf-story-i1 .baf-story-shot img { max-height: 40vh; }
+/* beat 2/5: screenshot della Home ridotto del 50% */
+.baf-story-i1 .baf-story-shot { width: min(26vw, 280px); }
+.baf-story-i1 .baf-story-shot img { max-height: 23vh; }
 /* beat 4: versione trasparente più contenuta, non copre la casa che brucia */
 .baf-story-shot-burn { width: min(44vw, 460px); top: 5%; }
 .baf-story-shot-burn img { max-height: 32vh; }
@@ -2256,7 +2268,11 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 
 /* ═══════════ Capitolo finale rinnovato: casa, dono, seme, acqua ═══════════ */
 /* La casa nuova: la sagoma del negozio rivestita a festa — chiaramente nuova */
-.baf-newhouse { bottom: 33%; transform: translateX(-50%) scale(1.55); transform-origin: 50% 100%; animation: baf-story-fade 0.9s ease-out; }
+.baf-newhouse { bottom: 33%; transform: translateX(-50%) scale(1.55); transform-origin: 50% 100%; animation: baf-house-fade 0.9s ease-out; }
+@keyframes baf-house-fade { from { opacity: 0; } to { opacity: 1; } }
+/* dono (s1): la casa cresce lentamente del 30% (nessuno scatto) */
+.baf-seme-scene.seme-s1 .baf-newhouse { animation: baf-house-grow 4s ease-out forwards; }
+@keyframes baf-house-grow { from { transform: translateX(-50%) scale(1.55); } to { transform: translateX(-50%) scale(2.02); } }
 .baf-newhouse .body { background: linear-gradient(180deg, #f3d9a4 0%, #e7bd78 55%, #d29b53 100%); box-shadow: inset 0 0 0 2px rgba(150,90,40,0.22); }
 .baf-newhouse .body::before, .baf-newhouse .body::after { display: none; }
 .baf-newhouse .roof { background: linear-gradient(180deg, #e79155, #b4552c); }
@@ -2268,8 +2284,13 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 /* posizioni della signora nei nuovi beat */
 .baf-seme-scene.seme-s1 .baf-seme-walker { left: 40%; }
 /* il seme si pianta di fianco alla casa, non davanti alla porta */
-.baf-seme-scene.seme-s4 .baf-seme-plot, .baf-seme-scene.seme-s5 .baf-seme-plot { left: 63%; }
+.baf-seme-scene.seme-s4 .baf-seme-plot, .baf-seme-scene.seme-s5 .baf-seme-plot, .baf-seme-scene.seme-s6 .baf-seme-plot { left: 63%; }
 .baf-seme-scene.seme-s5 .baf-seme-can { left: 63%; }
+/* beat 5 annaffiatura: lo studente vicino all'annaffiatoio */
+.baf-seme-scene.seme-s5 .baf-seme-stud { left: 54%; bottom: 30%; transform: translateX(-50%) scale(1.7); transform-origin: bottom center; z-index: 3; }
+/* TYP (s3) e domanda (s6) centrati: dissolvenza senza slide (niente scatto) */
+.baf-seme-scene.seme-s3 .baf-seme-cap, .baf-seme-scene.seme-s6 .baf-seme-cap { animation: baf-fade-op 0.45s ease-out; }
+@keyframes baf-fade-op { from { opacity: 0; } to { opacity: 1; } }
 .baf-seme-scene.seme-s2 .baf-seme-walker { left: 46%; }
 .baf-seme-scene.seme-s2 { cursor: default; }
 .baf-seme-scene.seme-s3 { cursor: default; }
@@ -2284,7 +2305,8 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-seed-scene { position: absolute; left: 56%; bottom: 39%; z-index: 5; animation: baf-seed-float 2.6s ease-in-out infinite alternate; }
 @keyframes baf-seed-float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 /* TYP del seme: "Hai guadagnato: SEME" */
-.baf-seme-typ { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 34px 44px 30px; border-radius: 26px; background: rgba(250,246,242,0.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 18px 50px rgba(50,34,44,0.25); cursor: default; animation: baf-typ-pop 0.55s cubic-bezier(0.34,1.56,0.64,1); }
+.baf-seme-typ { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 34px 44px 30px; border-radius: 26px; background: rgba(250,246,242,0.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 18px 50px rgba(50,34,44,0.25); cursor: default; animation: baf-typ-fade 0.5s ease-out; }
+@keyframes baf-typ-fade { from { opacity: 0; } to { opacity: 1; } }
 .baf-seme-typ .baf-seed-typ { margin-bottom: 6px; }
 .baf-seme-typ .baf-seed-typ .pip { width: 44px; height: 58px; }
 .baf-seme-typ .k { font-family: var(--font-title); font-weight: 800; font-size: var(--label-3, 12px); letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a45; }
@@ -2296,19 +2318,26 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-seme-scene.seme-s3 .baf-seme-cap { bottom: auto; top: 50%; transform: translateY(-50%); }
 /* Capitolo finale · testo BIANCO nei beat sopra il cielo (s0,s1,s2,s4).
    I beat con pannello chiaro (TYP s3, domanda s5) restano scuri. */
-.baf-seme-scene.seme-s0 .baf-seme-cap .k, .baf-seme-scene.seme-s1 .baf-seme-cap .k, .baf-seme-scene.seme-s2 .baf-seme-cap .k, .baf-seme-scene.seme-s4 .baf-seme-cap .k,
-.baf-seme-scene.seme-s0 .baf-seme-cap .line, .baf-seme-scene.seme-s1 .baf-seme-cap .line, .baf-seme-scene.seme-s2 .baf-seme-cap .line, .baf-seme-scene.seme-s4 .baf-seme-cap .line { color: #ffffff !important; text-shadow: 0 2px 14px rgba(30,20,26,0.6), 0 1px 3px rgba(30,20,26,0.55); }
+.baf-seme-scene.seme-s0 .baf-seme-cap .k, .baf-seme-scene.seme-s1 .baf-seme-cap .k, .baf-seme-scene.seme-s2 .baf-seme-cap .k, .baf-seme-scene.seme-s4 .baf-seme-cap .k, .baf-seme-scene.seme-s5 .baf-seme-cap .k,
+.baf-seme-scene.seme-s0 .baf-seme-cap .line, .baf-seme-scene.seme-s1 .baf-seme-cap .line, .baf-seme-scene.seme-s2 .baf-seme-cap .line, .baf-seme-scene.seme-s4 .baf-seme-cap .line, .baf-seme-scene.seme-s5 .baf-seme-cap .line { color: #ffffff !important; text-shadow: 0 2px 14px rgba(30,20,26,0.6), 0 1px 3px rgba(30,20,26,0.55); }
 .baf-seme-scene.seme-s0 .baf-seme-cap .baf-story-go, .baf-seme-scene.seme-s1 .baf-seme-cap .baf-story-go, .baf-seme-scene.seme-s4 .baf-seme-cap .baf-story-go { color: #ffffff; text-shadow: 0 2px 12px rgba(30,20,26,0.5); }
 .baf-seme-scene.seme-s0 .baf-seme-cap .baf-story-go .dots, .baf-seme-scene.seme-s1 .baf-seme-cap .baf-story-go .dots, .baf-seme-scene.seme-s4 .baf-seme-cap .baf-story-go .dots { background: rgba(255,255,255,0.24); color: #ffffff; }
 /* scrim morbido in basso: garantisce il contrasto del testo bianco */
-.baf-seme-scene.seme-s0 .baf-seme-cap::after, .baf-seme-scene.seme-s1 .baf-seme-cap::after, .baf-seme-scene.seme-s2 .baf-seme-cap::after, .baf-seme-scene.seme-s4 .baf-seme-cap::after { content: ""; position: absolute; left: 50%; bottom: -6vh; transform: translateX(-50%); width: 100vw; height: 280px; background: linear-gradient(180deg, transparent, rgba(50,30,34,0.5)); z-index: -1; pointer-events: none; }
+.baf-seme-scene.seme-s0 .baf-seme-cap::after, .baf-seme-scene.seme-s1 .baf-seme-cap::after, .baf-seme-scene.seme-s2 .baf-seme-cap::after, .baf-seme-scene.seme-s4 .baf-seme-cap::after, .baf-seme-scene.seme-s5 .baf-seme-cap::after { content: ""; position: absolute; left: 50%; bottom: -6vh; transform: translateX(-50%); width: 100vw; height: 280px; background: linear-gradient(180deg, transparent, rgba(50,30,34,0.5)); z-index: -1; pointer-events: none; }
+/* dono (s1): la signora cresce lentamente del 30% insieme alla casa */
+.baf-seme-scene.seme-s1 .baf-seme-walker { animation: baf-lady-grow 4s ease-out forwards; }
+@keyframes baf-lady-grow { from { transform: translateX(-50%) scale(2.4); } to { transform: translateX(-50%) scale(3.12); } }
+/* campanella animata accanto a "Dlin dlon" */
+.baf-bell { display: inline-flex; margin-right: 6px; transform-origin: 50% 15%; animation: baf-bell-ring 1.4s ease-in-out infinite; }
+@keyframes baf-bell-ring { 0%, 60%, 100% { transform: rotate(0); } 8% { transform: rotate(16deg); } 20% { transform: rotate(-13deg); } 32% { transform: rotate(9deg); } 44% { transform: rotate(-5deg); } }
+@media (prefers-reduced-motion: reduce) { .baf-bell, .baf-seme-scene.seme-s1 .baf-seme-walker, .baf-seme-scene.seme-s1 .baf-newhouse { animation: none; } }
 /* niente alone attorno alla casa nuova */
 .baf-newhouse { filter: url(#baf-rough-soft); }
 /* beat della domanda: pannello al centro, annaffiatoio visibile dietro */
-.baf-seme-scene.seme-s5 .baf-seme-cap { top: 46%; bottom: auto; transform: translateY(-50%); padding: 0 26px; }
-.baf-seme-scene.seme-s5 .baf-seme-cap::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(760px, 94%); height: calc(100% + 44px); background: rgba(250,246,242,0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 26px; box-shadow: 0 12px 34px rgba(50,34,44,0.14); z-index: -1; pointer-events: none; }
-.baf-seme-scene.seme-s5 .baf-seme-q { color: #3d5c46; }
-.baf-seme-scene.seme-s5 .baf-seme-subq { color: #5c4c56; font-size: var(--paragraph-p2, 15px); max-width: 52ch; font-style: normal; }
+.baf-seme-scene.seme-s6 .baf-seme-cap { top: 46%; bottom: auto; transform: translateY(-50%); padding: 0 26px; }
+.baf-seme-scene.seme-s6 .baf-seme-cap::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(760px, 94%); height: calc(100% + 44px); background: rgba(250,246,242,0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 26px; box-shadow: 0 12px 34px rgba(50,34,44,0.14); z-index: -1; pointer-events: none; }
+.baf-seme-scene.seme-s6 .baf-seme-q { color: #3d5c46; }
+.baf-seme-scene.seme-s6 .baf-seme-subq { color: #5c4c56; font-size: var(--paragraph-p2, 15px); max-width: 52ch; font-style: normal; }
 .baf-seme-scene.seme-s5 .baf-seme-can { opacity: 1; }
 /* i fuochi d'artificio del TYP finale */
 .baf-fireworks { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
@@ -2443,3 +2472,9 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 /* la card del ringraziamento sopra il cast */
 .baf-seme-final-in { position: relative; z-index: 2; padding-bottom: 190px; }
 @media (prefers-reduced-motion: reduce) { .baf-final-cast .cast i, .baf-final-cast .cast, .baf-final-stars i { animation: none !important; } }
+
+/* Logo start2impact sulla casa dello studente (Capitolo 0 1/5 e capitolo finale) */
+.baf-house-mark { position: absolute; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; z-index: 4; pointer-events: none; }
+.baf-house-mark img { display: block; width: 100%; height: auto; }
+.baf-fhouse .baf-house-mark { bottom: 104px; width: 57px; opacity: 0.97; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.45)); }
+.baf-newhouse .baf-house-mark { bottom: 62px; width: 24px; z-index: 5; }

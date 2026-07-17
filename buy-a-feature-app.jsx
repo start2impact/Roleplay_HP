@@ -85,7 +85,7 @@
     { id: "ai_path",              name: "Percorso su misura con l'AI", real: "Onboarding intelligente",  price: 30, icon: "gem",             arch: "bussola", what: "Al primo accesso scrivi cosa vuoi imparare e in meno di un minuto l'AI costruisce un percorso su misura pescando da oltre 12.000 lezioni. Onboarding personale, zero configurazione." },
     { id: "dashboard_counters",   name: "Cruscotto a 4 contatori",     real: "Ore · concetti · lezioni · progetti", price: 25, icon: "clipboard-list-check", arch: "cabina", what: "Quattro contatori sempre in vista: ore di studio, concetti, lezioni e progetti superati. La tua costanza diventa un numero che cresce sotto i tuoi occhi." },
     { id: "personal_dashboard",   name: "Cruscotto personale",         real: "Tutto in una schermata",   price: 30, icon: "list-check",       arch: "cabina",  what: "Voti, medie, presenze, minuti online e competenze acquisite: tutto in un'unica schermata. Il quadro completo dei progressi senza saltare da una pagina all'altra." },
-    { id: "projects_portfolio",   name: "Progetti e portfolio",        real: "Collegato a GitHub",       price: 35, icon: "folder",          arch: "rampa",   what: "I progetti si collegano a GitHub — il «curriculum» di chi programma — e ricevono la valutazione dei docenti. Studiare e costruire il portfolio diventano la stessa cosa." },
+    { id: "projects_portfolio",   name: "Progetti e portfolio",        real: "Collegato a GitHub",       price: 35, icon: "folder",          arch: "rampa",   what: "I progetti si collegano a GitHub, il «curriculum» di chi programma, e ricevono la valutazione dei docenti. Studiare e costruire il portfolio diventano la stessa cosa." },
     { id: "gamification",         name: "Gamification",                real: "Punti, badge, streak",     price: 25, icon: "medal",           arch: "motore",  what: "Punti, badge e streak trasformano lo studio in progressi visibili. Piccole ricompense che tengono viva la motivazione giorno dopo giorno." },
     { id: "weighted_points",      name: "Punti pesati per competenza", real: "Pratica > teoria",         price: 20, icon: "gem",             arch: "motore",  what: "I punti pesano la pratica: 50 un progetto, 25 una lezione, 10 un quiz, 5 un video. Ti spinge a fare, non solo a guardare." },
     { id: "weekly_streak",        name: "Streak settimanale",          real: "Non giornaliera",          price: 15, icon: "fire",            arch: "motore",  what: "Scegli quanti giorni a settimana vuoi studiare; ogni settimana centrata allunga la serie. Un obiettivo sostenibile che rispetta i tuoi ritmi reali." },
@@ -271,23 +271,24 @@
     // Riconoscimento a punteggio: ogni categoria somma le parole-chiave trovate
     // e vince quella con più riscontri (non più il primo match della catena).
     const KEYWORDS = {
-      lista:     ["elenco", "lista", "checklist", "check list", "spunta", "spuntare", "attività", "attivita", "to-do", "todo", "cose da fare", "da fare", "traccia", "tracciare", "tracker", "task", "punti elenco", "voci"],
-      scadenze:  ["scadenz", "promemoria", "calendari", "appuntament", "consegn", "evento", "eventi", "reminder", "termine", "deadline", "agenda", "quando"],
-      riepilogo: ["ore", "tempo", "minut", "riepilog", "statist", "media", "cruscott", "report", "grafic", "dati", "numer", "contator", "dashboard", "andament", "monitor"],
-      progressi: ["punt", "classific", "streak", "badge", "sfid", "gioc", "gamif", "livell", "premi", "medagl", "trofe", "ricompens", "competizion"],
-      rete:      ["chat", "messagg", "community", "compagn", "buddy", "tutor", "confront", "coach", "aiuto", "supporto", "domand", "rete", "forum", "grupp", "mentor"],
-      percorso:  ["percorso", "avanzament", "progress", "prossim", "passo", "suggeri", "master", "lezion", "studi", "traguard", "roadmap", "orientament", "consigli"],
-      carriera:  ["lavoro", "carriera", "offert", "colloqui", "curriculum", "portfolio", "github", "aziend", "stage", "assunz", "linkedin", "cv"],
-      materiali: ["nota", "appunt", "material", "salv", "risors", "bookmark", "preferit", "raccolt", "librer", "dispens", "pdf", "slide"],
+      lista:     ["elenco", "lista", "checklist", "check list", "spunta", "spuntare", "spunte", "casella", "checkbox", "attività", "attivita", "to-do", "todo", "cose da fare", "da fare", "traccia", "tracciare", "tracker", "task", "punti elenco", "voci"],
+      scadenze:  ["scadenz", "promemoria", "calendari", "appuntament", "consegn", "evento", "eventi", "reminder", "termine", "deadline", "agenda", "quando", "ricorda", "data"],
+      riepilogo: ["ore", "tempo", "minut", "riepilog", "statist", "media", "cruscott", "report", "grafic", "torta", "percentual", "dati", "numer", "contator", "dashboard", "andament", "monitor", "kpi", "quanto ho"],
+      progressi: ["punt", "classific", "streak", "badge", "sfid", "gioc", "gamif", "livell", "premi", "medagl", "trofe", "ricompens", "competizion", "traguard"],
+      rete:      ["chat", "messagg", "community", "compagn", "buddy", "tutor", "confront", "coach", "aiuto", "supporto", "domand", "rete", "forum", "grupp", "mentor", "colleg", "chiedere"],
+      percorso:  ["percorso", "avanzament", "progress", "prossim", "passo", "suggeri", "master", "lezion", "studi", "roadmap", "orientament", "consigli", "cosa fare", "cosa studiare"],
+      carriera:  ["lavoro", "lavori", "carriera", "offert", "colloqui", "curriculum", "portfolio", "github", "aziend", "stage", "assunz", "linkedin", "cv", "recruiter"],
+      materiali: ["nota", "appunt", "material", "salv", "risors", "bookmark", "preferit", "raccolt", "librer", "dispens", "pdf", "slide", "download", "scaric"],
       notifiche: ["notific", "avvis", "campanell", "aggiornament", "alert", "novit"],
-      certificati: ["certificat", "attestat", "diploma", "soglia", "riconoscim"],
-      video:     ["video", "live", "webinar", "registrazion", "streaming", "puntat", "rivedere"],
-      ai:        ["intelligenza artificiale", "assistente", "chatbot", "su misura", "personalizz", "automatic"],
+      certificati: ["certificat", "attestat", "diploma", "soglia", "riconoscim", "badge finale"],
+      video:     ["video", "live", "webinar", "registrazion", "streaming", "puntat", "rivedere", "replay"],
+      ai:        ["intelligenza artificiale", "assistente", "chatbot", "su misura", "personalizz", "automatic", "genera per me"],
     };
     const scores = Object.keys(KEYWORDS).map((k) => [k, KEYWORDS[k].filter((w) => t.includes(w)).length]);
     if (/\bai\b/.test(t)) scores.find((s) => s[0] === "ai")[1] += 1;
     scores.sort((a, b) => b[1] - a[1]);
     const cat = scores[0] && scores[0][1] > 0 ? scores[0][0] : "generic";
+    const buildBlock = (cat) => {
     let title, bd, tag = "Bozza", ic = "list-check";
     if (cat === "lista") {
       title = "Le mie attività"; ic = "list-check";
@@ -434,24 +435,33 @@
       bd = (<React.Fragment>
         <Line w="88%" h={7} />
         <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 2 }}><Line w="100%" /><Line w="92%" /><Line w="64%" /></div>
-        <Row style={{ gap: 7, alignItems: "stretch", marginTop: 2 }}><Cell n="—" l="Dato principale" ic="list-check" /><Cell n="—" l="Dato secondario" ic="circle-check" bg={PURPL} fg={PURPD} /></Row>
+        <Row style={{ gap: 7, alignItems: "stretch", marginTop: 2 }}><Cell n="-" l="Dato principale" ic="list-check" /><Cell n="-" l="Dato secondario" ic="circle-check" bg={PURPL} fg={PURPD} /></Row>
       </React.Fragment>);
     }
+      return { title, ic, tag, bd };
+    };
+    // Punto 2: se la frase tocca più funzionalità, compone due blocchi.
+    const b1 = buildBlock(cat);
+    const cat2 = (scores[1] && scores[1][1] > 0 && scores[1][0] !== cat) ? scores[1][0] : null;
+    const b2 = cat2 ? buildBlock(cat2) : null;
     // L'anteprima disegna la FUNZIONALITÀ dedotta (titolo + componenti DS),
     // non ripete la frase scritta dall'utente.
     return (
       <Panel style={{ gap: 9 }}>
         <Row style={{ justifyContent: "space-between", alignItems: "flex-start" }}>
           <Row style={{ minWidth: 0 }}>
-            <IconChip name={ic} bg={PURP} fg={WHITE} dim={32} size={16} />
+            <IconChip name={b1.ic} bg={PURP} fg={WHITE} dim={32} size={16} />
             <Col style={{ gap: 4 }}>
-              <span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 12.5, color: "var(--greyscale-dark)", lineHeight: 1.15 }}>{title}</span>
-              <div style={{ alignSelf: "flex-start" }}><Chip c={PURPL} fg={PURPD}>{tag}</Chip></div>
+              <span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 12.5, color: "var(--greyscale-dark)", lineHeight: 1.15 }}>{b1.title}</span>
+              <div style={{ alignSelf: "flex-start" }}><Chip c={PURPL} fg={PURPD}>{b1.tag}</Chip></div>
             </Col>
           </Row>
           <span style={{ color: "var(--greyscale-light)", display: "inline-flex", flexShrink: 0 }}><DSIcon name="ellipsis-vertical" size={13} /></span>
         </Row>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>{bd}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>{b1.bd}</div>
+        {b2 ? <div style={{ height: 1, background: EX, margin: "2px 0" }} /> : null}
+        {b2 ? <Head label={b2.title} /> : null}
+        {b2 ? <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>{b2.bd}</div> : null}
         <Row style={{ gap: 6, marginTop: 2 }}>
           <Chip c={PURP} fg={WHITE}>Apri</Chip>
           <Chip c={PURPL} fg={PURPD}>Personalizza</Chip>
@@ -1010,16 +1020,7 @@
         React.createElement("span", { className: "ic" }, React.createElement(DSIcon, { name: "gem", size: 16 })),
         React.createElement("span", { className: "l" }, "Hai una prova a supporto della tua scelta?"),
         React.createElement("span", { className: "tag" }, valid ? "+" + EVIDENCE_BONUS + " pt guadagnati" : "opzionale · guadagni +" + EVIDENCE_BONUS + " pt")),
-      React.createElement("textarea", { rows: 2, placeholder: "Incolla o cita un dato reale: un ticket, un messaggio di uno studente, un numero da un report.", value: entry.evidence || "", onChange: (e) => dv.setEvidence(id, e.target.value) }),
-      React.createElement("div", { className: "baf-ev-attach" },
-        React.createElement("input", { ref: fileRef, type: "file", accept: "image/*", style: { display: "none" }, onChange: pick }),
-        !entry.image
-          ? React.createElement("button", { className: "baf-ev-add", type: "button", onClick: () => fileRef.current && fileRef.current.click() },
-              React.createElement(DSIcon, { name: "file-arrow-up", size: 13 }), "Allega un'immagine")
-          : React.createElement("span", { className: "baf-ev-thumb" },
-              React.createElement("img", { src: entry.image.url, alt: "" }),
-              React.createElement("span", { className: "fn" }, entry.image.name),
-              React.createElement("button", { className: "rm", type: "button", title: "Rimuovi", onClick: () => dv.setImage(id, null) }, React.createElement(DSIcon, { name: "xmark", size: 13 })))));
+      React.createElement("textarea", { rows: 2, placeholder: "Incolla o cita un dato reale: un ticket, un messaggio di uno studente, un numero da un report.", value: entry.evidence || "", onChange: (e) => dv.setEvidence(id, e.target.value) }));
   }
 
   // ═══════════ DISCOVERY-A · IL SOPRALLUOGO (deck) ═══════════
@@ -1078,10 +1079,7 @@
                     React.createElement("span", { className: "baf-ico" }, React.createElement(DSIcon, { name: m.icon, size: 20 })),
                     React.createElement("div", null,
                       React.createElement("div", { className: "baf-dv-name" }, m.name),
-                      React.createElement("div", { className: "baf-dv-real" }, m.real))),
-                  React.createElement("div", { className: "baf-dv-what" },
-                    React.createElement("div", { className: "k" }, React.createElement(DSIcon, { name: "circle-info", size: 12 }), "A cosa serve"),
-                    React.createElement("p", null, m.desc)),
+                      React.createElement("div", { className: "baf-dv-desc" }, m.desc))),
                   React.createElement("div", { className: "baf-dv-q" }, DV_Q),
                   React.createElement("div", { className: "baf-dv-actions" },
                     React.createElement("button", { className: "baf-dv-act ok", "aria-pressed": entry.action === "ok", onClick: () => dv.setAction(m.id, "ok") },
@@ -1174,8 +1172,8 @@
   // Ingresso → Discovery → Turno (1A) → Reward → Vetrina
   // Stato condiviso; budget = 100 + bonus prove della discovery.
   // ═══════════════════════════════════════════════════════════
-  const FLOW_STEPS = ["ingresso", "discovery", "ponte", "buy", "custom", "confirm", "reward", "seme"];
-  const FLOW_PHASE = { ingresso: "Prologo", discovery: "Fase 1", ponte: "Atto 2", buy: "Fase 2", custom: "Fase 3", confirm: "Fase 4", reward: "Fase 5", seme: "Capitolo finale" };
+  const FLOW_STEPS = ["ingresso", "discovery", "ponte", "buy", "custom", "reward", "seme"];
+  const FLOW_PHASE = { ingresso: "Prologo", discovery: "Fase 1", ponte: "Atto 2", buy: "Fase 2", custom: "Fase 3", reward: "Fase 4", seme: "Capitolo finale" };
   const FLOW_LABELS = { ingresso: "Il risveglio", discovery: "Salva dalle fiamme", ponte: "La domanda", buy: "Ricostruisci", custom: "Il pezzo che manca", confirm: "L'architetto", reward: "La casa che hai costruito", seme: "Il seme" };
   const COVER_ROCKETS = [
     { x: "8%", y: "16%", c: "#6E5DC6", s: 50, rot: -18, d: "0s" },
@@ -1267,6 +1265,7 @@
         h("span", { className: "chimney" }),
         h("span", { className: "upper" }, h("span", { className: "beam v1" }), h("span", { className: "beam v2" }), h("span", { className: "beam v3" }), h("span", { className: "beam h1" }), h("span", { className: "win uwin" })),
         h("span", { className: "base" }, h("span", { className: "door" }), h("span", { className: "win bwin bwin1" }), h("span", { className: "win bwin bwin2" })),
+        h("span", { className: "baf-house-mark" }, h("img", { src: "uploads/grande-mercato-home/public/assets/logo/logo-white.svg", alt: "" })),
         h("span", { className: "fire" }, h("i", null), h("i", null), h("i", null), h("i", null), h("i", null)),
         h("span", { className: "fireglow" }),
         h("span", { className: "story-embers" }, embers)),
@@ -1298,12 +1297,12 @@
       // beat 5: l'angelo custode è il protagonista — la pallina con l'anello,
       // come in tutte le scene dipinte, ma in grande e nella sua luce
       catIn ? h("div", { className: "baf-story-aster", role: "img", "aria-label": "Aster, il tuo angelo custode" },
-        h("span", { className: "beam" }),
-        h("span", { className: "halo" }),
+        h("span", { className: "floor" }),
+        h("span", { className: "aura" }),
         h("span", { className: "cat" },
           h("span", { className: "ring" }),
           h("span", { className: "dot" })),
-        h("span", { className: "sp sp1" }), h("span", { className: "sp sp2" }), h("span", { className: "sp sp3" })) : null,
+        h("span", { className: "sp sp1" }), h("span", { className: "sp sp2" }), h("span", { className: "sp sp3" }), h("span", { className: "sp sp4" }), h("span", { className: "sp sp5" })) : null,
       h("div", { className: "baf-snowfall", "aria-hidden": "true" }, snow),
       h("div", { className: "baf-story-vignette2", "aria-hidden": "true" }),
       h("div", { className: "baf-fcaption", key: i },
@@ -1357,12 +1356,13 @@
     const h = React.createElement;
     const [i, setI] = React.useState(0);
     const advance = () => { if (i < 2) setI(i + 1); };
-    const cls = "baf-seme-scene seme-s" + i + (i >= 6 ? " seme-done seme-final" : "");
+    const cls = "baf-seme-scene seme-s" + i + (i >= 7 ? " seme-done seme-final" : "");
     const newHouse = h("div", { className: "baf-emporio baf-newhouse", "aria-hidden": "true" },
       h("span", { className: "chimney" }),
       h("span", { className: "roof" }),
       h("span", { className: "body" },
-        h("span", { className: "win w1" }), h("span", { className: "win w2" }), h("span", { className: "door" })));
+        h("span", { className: "win w1" }), h("span", { className: "win w2" }), h("span", { className: "door" }),
+        h("span", { className: "baf-house-mark" }, h("img", { src: "uploads/grande-mercato-home/public/assets/logo/logo-black.svg", alt: "" }))));
     const seed = (extra) => h("span", { className: "baf-seed " + extra, "aria-hidden": "true" },
       h("span", { className: "glow" }),
       h("span", { className: "pip" }, h("i", { className: "shine" })));
@@ -1378,14 +1378,14 @@
         h("span", { className: "c2", style: { width: 230, height: 230 * 0.42 * 1.7 } }, bafLobes(230))),
       h("div", { className: "baf-paper", "aria-hidden": "true" }),
       h("div", { className: "baf-paper2", "aria-hidden": "true" }),
-      i < 6 ? h("div", { className: "baf-seme-ground", "aria-hidden": "true" }) : null,
-      // il villaggio che rinasce dietro la tua casa (via solo nel beat del dono)
-      (i <= 1 || i === 4 || i === 5) ? h("div", { className: "baf-seme-houses", "aria-hidden": "true" },
+      i < 7 ? h("div", { className: "baf-seme-ground", "aria-hidden": "true" }) : null,
+      // il villaggio che rinasce dietro la tua casa (nel dono le case grigie spariscono)
+      (i === 0 || i === 4 || i === 5 || i === 6) ? h("div", { className: "baf-seme-houses", "aria-hidden": "true" },
         ["0", "1", "3", "4", "0", "1", "2", "3", "0", "4", "1", "3"].map((n, k) => h("span", { key: k, className: "hs h" + n }))) : null,
       // la casa che hai costruito, in mezzo al villaggio
-      (i <= 1 || i === 4 || i === 5) ? newHouse : null,
+      (i === 0 || i === 1 || i === 4 || i === 5 || i === 6) ? newHouse : null,
       // il seme piantato accanto alla casa (dal beat della semina)
-      (i === 4 || i === 5) ? h("div", { className: "baf-seme-plot", "aria-hidden": "true" },
+      (i === 4 || i === 5 || i === 6) ? h("div", { className: "baf-seme-plot", "aria-hidden": "true" },
         h("span", { className: "mound" }),
         h("span", { className: "sprout" }, h("i", { className: "stem" }), h("i", { className: "leaf l" }), h("i", { className: "leaf r" }))) : null,
       // la signora: alla porta con il dono, poi da sola col seme
@@ -1394,7 +1394,10 @@
         h("span", { className: "body" }),
         h("span", { className: "head" }, h("i", { className: "flower" }))) : null,
       i === 2 ? seed("baf-seed-scene") : null,
-      // l'annaffiatoio in azione mentre arriva la domanda
+      // beat 5: lo studente annaffia il seme con l'annaffiatoio
+      i === 5 ? h("div", { className: "baf-walker baf-seme-stud", "aria-hidden": "true" },
+        h("span", { className: "body" }),
+        h("span", { className: "head" })) : null,
       i === 5 ? h("div", { className: "baf-seme-can", "aria-hidden": "true" },
         h("span", { className: "handle" }),
         h("span", { className: "can" }),
@@ -1428,11 +1431,15 @@
               h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); setI(5); } }, "Innaffia il seme"))
           : i === 5
           ? h(React.Fragment, null,
-              h("h1", { className: "baf-seme-q baf-seme-ask" }, "Ogni giorno il seme deve prendere acqua."),
-              h("p", { className: "line baf-seme-subq" }, "Cosa sarebbe utile trovare ogni giorno in Home per darti l'energia giusta — per crescere e fortificarti anche quando il percorso non è tutto positivo?"),
+              h("p", { className: "line" }, "Prendi l'annaffiatoio e dai acqua al seme, mentre pensi tra te e te…"),
+              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); setI(6); } }, "Continua"))
+          : i === 6
+          ? h(React.Fragment, null,
+              h("h1", { className: "baf-seme-q baf-seme-ask" }, "Una piantina si cura un po' ogni giorno."),
+              h("p", { className: "line baf-seme-subq" }, "Come questo seme ha bisogno d'acqua per crescere, anche tu hai bisogno di qualcosa ogni giorno. Da studente, cosa vorresti trovare tornando in Home per sentirti nutrito, motivato e sostenuto, anche nei giorni storti?"),
               h("textarea", { className: "baf-seme-field", rows: 3, placeholder: "Una riga, se ti va. Oppure resta in silenzio e prosegui.", value: value, onChange: (e) => onChange(e.target.value), onClick: (e) => e.stopPropagation() }),
-              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(6); } }, value.trim() ? "Lascia la tua acqua" : "Prosegui"),
-              h("button", { className: "baf-seme-skip", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(6); } }, "Prosegui senza scrivere"))
+              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(7); } }, value.trim() ? "Lascia la tua acqua" : "Prosegui"),
+              h("button", { className: "baf-seme-skip", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(7); } }, "Prosegui senza scrivere"))
           : h("div", { className: "baf-seme-final-overlay" },
               // cielo: nuvole rosa dipinte + stelline che luccicano
               h("div", { className: "baf-final-sky", "aria-hidden": "true" },
@@ -1463,7 +1470,7 @@
                 h("p", { className: "line" }, "Dalle fiamme alla casa nuova: quello che hai scelto stanotte diventa la Home in cui il prossimo studente si sveglierà. Grazie per averla costruita con noi :)"),
                 recap ? h("div", { className: "baf-seme-recap" },
                   h("div", { className: "r" }, h("span", { className: "ic" }, h(DSIcon, { name: "fire", size: 14 })), h("span", null, h("b", null, recap.tookCount), " oggetti salvati dalle fiamme · ", h("b", null, recap.leftCount), " lasciati andare")),
-                  h("div", { className: "r" }, h("span", { className: "ic" }, h(DSIcon, { name: recap.arch.icon, size: 14 })), h("span", null, "La tua casa: ", h("b", null, recap.arch.title), " — “", recap.arch.casa, "”")),
+                  h("div", { className: "r" }, h("span", { className: "ic" }, h(DSIcon, { name: recap.arch.icon, size: 14 })), h("span", null, "La tua casa: ", h("b", null, recap.arch.title), " · “", recap.arch.casa, "”")),
                   h("div", { className: "r" }, h("span", { className: "ic" }, h(DSIcon, { name: "credit-card", size: 14 })), h("span", null, h("b", null, recap.itemsCount), " arredi scelti · ", recap.spent, " di ", recap.total, " pt spesi")),
                   (value || "").trim() ? h("div", { className: "r" }, h("span", { className: "ic" }, h(DSIcon, { name: "gem", size: 14 })), h("span", null, "La tua acqua di ogni giorno: “", value.trim(), "”")) : null) : null,
                 sendStatus === "sending"
@@ -1472,7 +1479,7 @@
                   ? h("div", { style: { marginTop: 2, fontSize: 13, fontWeight: 800, color: "#2a1a0c", fontFamily: "var(--font-paragraph)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 } }, h(DSIcon, { name: "circle-check", size: 15 }), "Risposte inviate, grazie!")
                   : sendStatus === "error"
                   ? h("div", { style: { marginTop: 4, padding: "11px 14px", borderRadius: 10, background: "#FDECEC", color: "#B23A3A", fontSize: 12.5, fontFamily: "var(--font-paragraph)", display: "flex", flexDirection: "column", alignItems: "center", gap: 9, textAlign: "center" } },
-                      h("span", null, "Non siamo riusciti a inviare le risposte — forse manca la connessione. Niente panico: le tue risposte non sono andate perse."),
+                      h("span", null, "Non siamo riusciti a inviare le risposte: forse manca la connessione. Niente panico, le tue risposte non sono andate perse."),
                       h("button", { type: "button", className: "baf-cta baf-cta-sm", onClick: (e) => { e.stopPropagation(); onRetry && onRetry(); } }, "Riprova"))
                   : null,
                 h("div", { className: "baf-seme-actions" },
@@ -1519,7 +1526,7 @@
       phase === "corner" && say && sayOpen && React.createElement("div", { className: "baf-genio-say", key: typeof say === "string" ? say : "say" }, say),
       React.createElement("div", { className: "baf-genio-fig", ref: figRef },
         canSlot
-          ? React.createElement("image-slot", { id: "genio-illustrazione", shape: "rect", fit: "contain", transparent: "", src: "assets/genio-gatto.png", placeholder: "la mascotte — trascina qui l'illustrazione" })
+          ? React.createElement("image-slot", { id: "genio-illustrazione", shape: "rect", fit: "contain", transparent: "", src: "assets/genio-gatto.png", placeholder: "la mascotte: trascina qui l'illustrazione" })
           : React.createElement("span", { className: "baf-wiz-avatar" }, React.createElement(DSIcon, { name: "gem", size: 26 })),
         React.createElement("i", { className: "sp sp1" }),
         React.createElement("i", { className: "sp sp2" }),
@@ -1680,6 +1687,7 @@
     const [custom, setCustom] = React.useState({ text: "", icon: "gem" });
     // testo "fotografato" all'ultima generazione: si può rigenerare quante volte si vuole
     const [pvText, setPvText] = React.useState(null);
+    const [pvNonce, setPvNonce] = React.useState(0);
     const [semeReply, setSemeReply] = React.useState("");
     const [special, setSpecial] = React.useState({});
     const [specialOpen, setSpecialOpen] = React.useState(false);
@@ -1702,7 +1710,7 @@
       const semeText = (reply != null ? reply : semeReply).trim();
       const nome = id.name.trim() || "(senza nome)";
       const payload = {
-        _subject: "La nuova Casa — risposte di " + nome,
+        _subject: "La nuova Casa · risposte di " + nome,
         "Nome": nome,
         "Data e ora": new Date().toLocaleString("it-IT"),
         "Chi hai scelto di essere": id.gender === "donna" ? "Studentessa" : id.gender === "uomo" ? "Studente" : "-",
@@ -1713,8 +1721,8 @@
       SHELF.forEach((m) => {
         const e = dvEntries[m.id] || {};
         let val = e.action === "ko" ? "Lasciato alle fiamme" : e.action === "ok" ? "Portato via" : "-";
-        if (e.reason) val += " — motivo: " + e.reason;
-        if (e.evidence) val += " — ricordo: " + e.evidence;
+        if (e.reason) val += " · motivo: " + e.reason;
+        if (e.evidence) val += " · ricordo: " + e.evidence;
         payload["[Vecchia Home] " + m.name] = val;
       });
       // Modalità speciale — domande di recupero punti
@@ -1898,7 +1906,7 @@
     // Scena dell'architetto: il negoziante dell'emporio si rivela (soglia →
     // si avvicina), in due battute con lo stile-copy delle scene introduttive
     if (step === "architetto") {
-      return React.createElement(ArchScene, { onRivedi: () => go("confirm"), onSicuro: () => go("reward") });
+      return React.createElement(ArchScene, { onRivedi: () => go("buy"), onSicuro: () => go("reward") });
     }
 
     // Atto VII — il seme: la signora e la domanda per chi verrà (a schermo intero)
@@ -1926,7 +1934,7 @@
       React.createElement("div", { className: "baf-flowbar-in" },
         React.createElement("div", { className: "baf-flowbar-top" },
           idx > 0
-            ? React.createElement("button", { className: "baf-flow-back", onClick: () => go(FLOW_STEPS[idx - 1]) }, React.createElement(DSIcon, { name: "arrow-left", size: 13 }), "Indietro")
+            ? React.createElement("button", { className: "baf-flow-back", onClick: () => go(step === "buy" ? "alba" : FLOW_STEPS[idx - 1]) }, React.createElement(DSIcon, { name: "arrow-left", size: 13 }), "Indietro")
             : React.createElement("img", { className: "baf-flow-logo", src: "assets/logo/logo-full.svg", alt: "start2impact" }),
           React.createElement("div", { className: "baf-flow-me" },
             React.createElement("span", { className: "baf-flow-steplabel" }, FLOW_PHASE[step], " · ", FLOW_LABELS[step]),
@@ -1978,11 +1986,11 @@
             React.createElement("div", { className: "baf-custom-preview" },
               React.createElement("div", { className: "baf-custom-pv-k" }, "Anteprima"),
               pvText != null
-                ? React.createElement("div", { className: "baf-thumb baf-thumb-lg", key: pvText, style: { background: MINTL } },
+                ? React.createElement("div", { className: "baf-thumb baf-thumb-lg", key: pvNonce, style: { background: MINTL } },
                     React.createElement(CustomScene, { text: pvText }))
                 : React.createElement("div", { className: "baf-custom-pv-empty" }, "Premi «Genera anteprima» per vederlo con gli stili di start2impact.")))),
         React.createElement("div", { className: "baf-flow-cta" },
-          React.createElement("button", { className: "baf-cta baf-cta-ghost baf-cta-gen" + (custom.text.trim() ? "" : " off"), onClick: () => custom.text.trim() && setPvText(custom.text) }, React.createElement(DSIcon, { name: "gem", size: 14 }), pvText != null ? "Rigenera anteprima" : "Genera anteprima"),
+          React.createElement("button", { className: "baf-cta baf-cta-ghost baf-cta-gen" + (custom.text.trim() ? "" : " off"), onClick: () => { if (custom.text.trim()) { setPvText(custom.text); setPvNonce((n) => n + 1); } } }, React.createElement(DSIcon, { name: "gem", size: 14 }), pvText != null ? "Rigenera anteprima" : "Genera anteprima"),
           React.createElement("button", { className: "baf-cta", style: { marginLeft: "auto" }, onClick: () => go("architetto") }, "Andiamo avanti", React.createElement(DSIcon, { name: "arrow-right", size: 14 }))));
     } else if (step === "confirm") {
       const chosen = ids.map((x) => byId[x]);
@@ -2013,19 +2021,19 @@
       const d = { items, spent, left, arch: ARCH[computeArch(ids)] || ARCH.cabina };
       body = React.createElement("div", { className: "baf-flow" },
         React.createElement("div", { className: "baf-flow-h" },
-          React.createElement("div", { className: "k" }, "Fase 5 · La casa che hai costruito"),
+          React.createElement("div", { className: "k" }, "Fase 4 · La casa che hai costruito"),
           React.createElement("h1", null, "Ecco la tua nuova casa")),
         RewardView(d, total),
         React.createElement("div", { className: "baf-flow-cta" },
           React.createElement("div", { className: "info" },
-            React.createElement("div", { className: "t" }, "Dlin dlon"),
+            React.createElement("div", { className: "t" }, React.createElement("span", { className: "baf-bell" }, React.createElement(DSIcon, { name: "bell", size: 16 })), "Dlin dlon"),
             React.createElement("div", { className: "s" }, "Suonano al campanello della tua nuova casa! Chi sarà?")),
           React.createElement("button", { className: "baf-cta", onClick: () => go("seme") }, React.createElement(DSIcon, { name: "bell", size: 15 }), "Rispondi al campanello")));
     } else {
       // vetrina — la tua casa + il quartiere del team
       const myArchK = computeArch(ids) || "cabina";
       const myArch = ARCH[myArchK];
-      const myResult = { name: id.name.trim() || "Tu", team: id.team || "—", cart: ids, archK: myArchK };
+      const myResult = { name: id.name.trim() || "Tu", team: id.team || "-", cart: ids, archK: myArchK };
       const list = [myResult].concat(SEED);
       const split = divisiveFeature(list);
       body = React.createElement("div", { className: "baf-flow" },
@@ -2072,7 +2080,7 @@
       discovery: React.createElement(React.Fragment, null,
         React.createElement("strong", { className: "baf-aster-title" }, "Segui l'istinto"),
         React.createElement("p", null, "Prendi ciò che conta davvero: quello che lasci sparisce tra le fiamme."),
-        React.createElement("p", { className: "baf-aster-note" }, "Ogni cosa lasciata ti fa recuperare punti — e se aggiungi una prova a supporto guadagni +5 pt.")),
+        React.createElement("p", { className: "baf-aster-note" }, "Ogni cosa lasciata ti fa recuperare punti, e se aggiungi una prova a supporto guadagni +5 pt.")),
       buy: React.createElement(React.Fragment, null,
         React.createElement("strong", { className: "baf-aster-title" }, "Il negozio è aperto"),
         React.createElement("p", null, "Hai ", React.createElement("b", null, total, " pt"), ": 40 di base + " + cassa + " recuperati dalle fiamme."),
