@@ -2002,7 +2002,8 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 /* ── Finale · modale a tutta pagina (scena dei crediti) ── */
 @keyframes baf-credit-rise { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes baf-credit-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-.baf-seme-final-overlay { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center; padding: 24px; background: linear-gradient(180deg, #9fabc6 0%, #b0adc1 36%, #cbb9bd 58%, #e2b7a4 82%, #eec9ae 100%); animation: baf-credit-rise 1.3s cubic-bezier(0.22,0.61,0.36,1) both; overflow: auto; cursor: default; }
+.baf-seme-final-overlay { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center; padding: 24px; background: linear-gradient(180deg, #9fabc6 0%, #b0adc1 36%, #cbb9bd 58%, #e2b7a4 82%, #eec9ae 100%); animation: baf-final-appear 1s ease both; overflow: auto; cursor: default; }
+@keyframes baf-final-appear { from { opacity: 0; } to { opacity: 1; } }
 /* bottoni fine gioco: contrasto forte sul fondo chiaro (viola azione DS), senza aloni */
 .baf-seme-btn { box-shadow: none; }
 /* reward card (overlay PNG): spazio icona/etichetta, chiudi bianco con hover */
@@ -2136,7 +2137,8 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 /* ═══════════ FEEDBACK SARA 16/07 · scena d'apertura ═══════════ */
 /* Lo "screen" della Home appeso nel cielo (beat 2) e la sua versione
    in fiamme e trasparenza (beat 4). */
-.baf-story-shot { position: absolute; left: 50%; top: 7%; transform: translateX(-50%) rotate(-1.5deg); z-index: 6; width: min(52vw, 560px); cursor: zoom-in; animation: baf-story-fade 0.9s ease-out; }
+.baf-story-shot { position: absolute; left: 50%; top: 7%; transform: translateX(-50%) rotate(-1.5deg); z-index: 6; width: min(52vw, 560px); cursor: zoom-in; animation: baf-shot-fadein 0.9s ease-out; }
+@keyframes baf-shot-fadein { from { opacity: 0; } to { opacity: 1; } }
 .baf-story-shot img { display: block; width: 100%; height: auto; max-height: 46vh; object-fit: cover; object-position: top; border-radius: 12px; border: 5px solid rgba(255,255,255,0.92); box-shadow: 0 26px 70px -18px rgba(0,0,0,0.65); }
 .baf-story-shot .hint { position: absolute; left: 50%; bottom: -16px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 7px 14px; border-radius: 99px; background: rgba(255,255,255,0.94); color: #1A1A2E; font-family: var(--font-paragraph); font-weight: 700; font-size: 12px; box-shadow: 0 8px 22px rgba(0,0,0,0.4); }
 @media (max-width: 680px) { .baf-story-shot { width: 80vw; } }
@@ -2477,4 +2479,4 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-house-mark { position: absolute; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; z-index: 4; pointer-events: none; }
 .baf-house-mark img { display: block; width: 100%; height: auto; }
 .baf-fhouse .baf-house-mark { bottom: 104px; width: 57px; opacity: 0.97; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.45)); }
-.baf-newhouse .baf-house-mark { bottom: 62px; width: 24px; z-index: 5; }
+.baf-newhouse .baf-house-mark { bottom: 62px; width: 31px; z-index: 5; }
