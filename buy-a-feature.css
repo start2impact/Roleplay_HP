@@ -2002,7 +2002,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 /* ── Finale · modale a tutta pagina (scena dei crediti) ── */
 @keyframes baf-credit-rise { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes baf-credit-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-.baf-seme-final-overlay { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center; padding: 24px; background: linear-gradient(180deg, #9fabc6 0%, #b0adc1 36%, #cbb9bd 58%, #e2b7a4 82%, #eec9ae 100%); animation: baf-final-appear 1s ease both; overflow: auto; cursor: default; }
+.baf-seme-final-overlay { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center; padding: 24px; background: linear-gradient(180deg, #9fabc6 0%, #b0adc1 36%, #cbb9bd 58%, #e2b7a4 82%, #eec9ae 100%); animation: baf-final-appear 1.4s ease-out both; overflow: hidden; cursor: default; }
 @keyframes baf-final-appear { from { opacity: 0; } to { opacity: 1; } }
 /* bottoni fine gioco: contrasto forte sul fondo chiaro (viola azione DS), senza aloni */
 .baf-seme-btn { box-shadow: none; }
@@ -2064,7 +2064,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
   .baf-cert-sheet { width: 100%; box-shadow: none; border-radius: 0; padding: 0; }
   @page { size: A4 landscape; margin: 12mm; }
 }
-.baf-seme-final-in { width: min(680px, 100%); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 28px; }
+.baf-seme-final-in { width: min(680px, 100%); max-height: 88vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 28px; }
 .baf-seme-final-mark { width: 144px; height: auto; display: inline-flex; margin-bottom: 8px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12)); }
 .baf-seme-final-mark img { width: 100%; height: auto; object-fit: contain; }
 .baf-seme-final-k { font-family: var(--font-title); font-weight: 800; font-size: var(--label-3, 12px); letter-spacing: 0.16em; text-transform: uppercase; color: #b07a52; }
@@ -2302,15 +2302,19 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-seed { position: relative; display: inline-flex; align-items: center; justify-content: center; }
 .baf-seed .glow { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(255,235,170,0.85) 0%, rgba(255,220,140,0.35) 48%, transparent 72%); animation: baf-seedglow 2.4s ease-in-out infinite alternate; }
 @keyframes baf-seedglow { from { opacity: 0.75; transform: translate(-50%, -50%) scale(0.94); } to { opacity: 1; transform: translate(-50%, -50%) scale(1.06); } }
-.baf-seed .pip { position: relative; width: 34px; height: 44px; border-radius: 50% 50% 50% 50% / 42% 42% 58% 58%; background: radial-gradient(circle at 38% 30%, #a97648, #6e4a26 62%, #4c3118 100%); box-shadow: 0 8px 18px rgba(60,40,15,0.45); }
-.baf-seed .pip .shine { position: absolute; top: 7px; left: 8px; width: 9px; height: 13px; border-radius: 50%; background: rgba(255,240,210,0.55); }
+.baf-seed .plant { position: relative; width: 46px; height: 52px; }
+.baf-seed .plant .pot { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 30px; height: 22px; border-radius: 4px 4px 8px 8px; background: linear-gradient(180deg, #c47a44, #8f4e24); box-shadow: 0 6px 14px rgba(60,40,15,0.35); }
+.baf-seed .plant .stem { position: absolute; bottom: 17px; left: 50%; transform: translateX(-50%); width: 3px; height: 26px; border-radius: 2px; background: linear-gradient(180deg, #7ed08a, #3f8a52); }
+.baf-seed .plant .leaf { position: absolute; bottom: 30px; width: 18px; height: 12px; background: radial-gradient(circle at 30% 30%, #8fdc98, #4aa564); border-radius: 0 90% 0 90%; }
+.baf-seed .plant .leaf.l { right: 50%; transform: rotate(-24deg); transform-origin: right center; }
+.baf-seed .plant .leaf.r { left: 50%; transform: rotate(24deg) scaleX(-1); transform-origin: left center; }
 .baf-seed-scene { position: absolute; left: 56%; bottom: 39%; z-index: 5; animation: baf-seed-float 2.6s ease-in-out infinite alternate; }
 @keyframes baf-seed-float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 /* TYP del seme: "Hai guadagnato: SEME" */
 .baf-seme-typ { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 34px 44px 30px; border-radius: 26px; background: rgba(250,246,242,0.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 18px 50px rgba(50,34,44,0.25); cursor: default; animation: baf-typ-fade 0.5s ease-out; }
 @keyframes baf-typ-fade { from { opacity: 0; } to { opacity: 1; } }
 .baf-seme-typ .baf-seed-typ { margin-bottom: 6px; }
-.baf-seme-typ .baf-seed-typ .pip { width: 44px; height: 58px; }
+.baf-seme-typ .baf-seed-typ .plant { transform: scale(1.3); }
 .baf-seme-typ .k { font-family: var(--font-title); font-weight: 800; font-size: var(--label-3, 12px); letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a45; }
 .baf-seme-typ .big { font-family: var(--font-display, var(--font-title)); font-weight: 800; font-size: clamp(2rem, 6vw, 3rem); line-height: 1; color: #4a382c; }
 .baf-seme-typ .line { font-size: var(--paragraph-p2, 15px); color: #6a4e3e; font-style: italic; }
@@ -2337,7 +2341,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-newhouse { filter: url(#baf-rough-soft); }
 /* beat della domanda: pannello al centro, annaffiatoio visibile dietro */
 .baf-seme-scene.seme-s6 .baf-seme-cap { top: 46%; bottom: auto; transform: translateY(-50%); padding: 0 26px; }
-.baf-seme-scene.seme-s6 .baf-seme-cap::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(760px, 94%); height: calc(100% + 44px); background: rgba(250,246,242,0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 26px; box-shadow: 0 12px 34px rgba(50,34,44,0.14); z-index: -1; pointer-events: none; }
+.baf-seme-scene.seme-s6 .baf-seme-cap::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(760px, 94%); height: calc(100% + 44px); background: #ffffff; border-radius: 26px; box-shadow: 0 18px 50px rgba(50,34,44,0.24); z-index: -1; pointer-events: none; }
 .baf-seme-scene.seme-s6 .baf-seme-q { color: #3d5c46; }
 .baf-seme-scene.seme-s6 .baf-seme-subq { color: #5c4c56; font-size: var(--paragraph-p2, 15px); max-width: 52ch; font-style: normal; }
 .baf-seme-scene.seme-s5 .baf-seme-can { opacity: 1; }
@@ -2439,7 +2443,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) { .baf-seme-starfield i { animation: none; } }
 
 /* il cast del racconto, in basso, che saluta */
-.baf-final-cast { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; height: 168px; display: flex; align-items: flex-end; justify-content: center; gap: clamp(22px, 7vw, 96px); padding-bottom: 18px; pointer-events: none; }
+.baf-final-cast { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1; height: 150px; display: flex; align-items: flex-end; justify-content: center; gap: clamp(22px, 8vw, 110px); padding-bottom: 14px; pointer-events: none; }
 .baf-final-cast .cast { position: relative; width: 66px; height: 128px; filter: url(#baf-rough-soft); }
 .baf-final-cast .cast i { position: absolute; }
 @keyframes baf-wave { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-26deg); } }
@@ -2480,3 +2484,10 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-house-mark img { display: block; width: 100%; height: auto; }
 .baf-fhouse .baf-house-mark { bottom: 104px; width: 57px; opacity: 0.97; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.45)); }
 .baf-newhouse .baf-house-mark { bottom: 62px; width: 31px; z-index: 5; }
+
+/* Fase 1 · label "Domanda facoltativa" sopra il box prova */
+.baf-ev-optlabel { font-family: var(--font-paragraph); font-weight: 800; font-size: var(--paragraph-span3); letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-secondary, #007369); margin-bottom: 2px; }
+
+/* signora anziana senza bastone */
+.baf-seme-scene .baf-seme-walker .staff, .cast.oldlady .staff { display: none !important; }
+
