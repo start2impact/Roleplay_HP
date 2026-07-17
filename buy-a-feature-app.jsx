@@ -7,11 +7,11 @@
 // ─────────────────────────────────────────────────────────────
 (function () {
   const DS_BASE = "uploads/grande-mercato-home/public/";
-  const NS = window.DesignSystem_3f5762 || {};
-  function DSIcon(props) { return React.createElement(NS.Icon, Object.assign({ base: DS_BASE }, props)); }
-  function DSInput(props) { return React.createElement(NS.Input, Object.assign({ base: DS_BASE }, props)); }
-  function DSTextarea(props) { return React.createElement(NS.Textarea, Object.assign({ base: DS_BASE }, props)); }
-  function DSDropdown(props) { return React.createElement(NS.Dropdown, Object.assign({ base: DS_BASE }, props)); }
+  function getNS() { return window.DesignSystem_3f5762 || {}; }
+  function DSIcon(props) { const NS = getNS(); return NS.Icon ? React.createElement(NS.Icon, Object.assign({ base: DS_BASE }, props)) : null; }
+  function DSInput(props) { const NS = getNS(); return NS.Input ? React.createElement(NS.Input, Object.assign({ base: DS_BASE }, props)) : null; }
+  function DSTextarea(props) { const NS = getNS(); return NS.Textarea ? React.createElement(NS.Textarea, Object.assign({ base: DS_BASE }, props)) : null; }
+  function DSDropdown(props) { const NS = getNS(); return NS.Dropdown ? React.createElement(NS.Dropdown, Object.assign({ base: DS_BASE }, props)) : null; }
 
   // ── Primitive pittoriche condivise per le scene animate ──
   // Filtro grana (roughen) per bordi nuvole dipinti a mano; definito una volta, referenziato via filter:url(#baf-rough)
