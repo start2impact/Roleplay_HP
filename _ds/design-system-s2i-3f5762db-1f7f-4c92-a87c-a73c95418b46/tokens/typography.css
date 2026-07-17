@@ -1,0 +1,68 @@
+/* start2impact — Typography tokens
+   Canonical source: Brand Guidelines → Tipografia + tailwind.preset.ts fontSize scale.
+   Inter Tight (700) for headings · Inter for body/labels/buttons ·
+   Inter Tight (heavier) for oversized landing headings · More Sugar for brand display.
+   (Montserrat retired 2026 — kept loadable as a legacy fallback only.)
+   Line-height a tight 1.2 almost everywhere; letter-spacing 0%. */
+
+:root {
+	/* Families */
+	--font-title: "Inter Tight", "Inter", system-ui, sans-serif; /* headings H1–H6 */
+	--font-paragraph: "Inter", system-ui, sans-serif;        /* body, labels, buttons, UI */
+	--font-tight: "Inter Tight", "Inter", system-ui, sans-serif; /* oversized landing headings */
+	/* More Sugar = handwritten brand display face (self-hosted). Permanent Marker / Inter Tight
+	   are legible fallbacks if the More Sugar file is unavailable. */
+	--font-display: "More Sugar", "Permanent Marker", "Inter Tight", cursive;    /* handwritten brand display / captions */
+
+	/* Weights */
+	--weight-regular: 400;
+	--weight-medium: 500;
+	--weight-semibold: 600;
+	--weight-bold: 700;
+	--weight-extra: 800;
+	--weight-black: 900;
+
+	/* Line-height */
+	--leading-tight: 1.2;
+	--leading-body: 1.5;
+
+	/* Headings — Inter Tight 700 (app / product scale) */
+	--h1: 32px;
+	--h2: 28px;
+	--h3: 25px;
+	--h4: 22px;
+	--h5: 20px;
+	--h6: 18px;
+
+	/* Headings — landing / marketing scale (Inter Tight, heavier) */
+	--h1-landing: 54px;
+	--h2-landing: 40px;
+	--h3-landing: 32px;
+	--h4-landing: 23px;
+	--h5-landing: 21px;
+	--h6-landing: 18px;
+
+	/* Labels — Inter 600 */
+	--label: 18px;
+	--label-1: 16px;
+	--label-2: 14px;
+	--label-3: 12px;
+	--label-4: 10px;
+
+	/* Paragraph & spans — Inter 400 */
+	--paragraph-p1: 18px;
+	--paragraph-span1: 16px;
+	--paragraph-span2: 14px;
+	--paragraph-span3: 12px;
+	--paragraph-span4: 10px;
+
+	/* Buttons — Inter 800, uppercase */
+	--button-1: 16px;
+	--button-2: 14px;
+	--button-3: 12px;
+	--button-4: 10px;
+
+	/* More Sugar — contour / decorative copy */
+	--more-sugar-1: 16px;
+	--more-sugar-2: 14px;
+}

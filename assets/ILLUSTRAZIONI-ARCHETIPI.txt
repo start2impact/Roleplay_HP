@@ -1,0 +1,21 @@
+ILLUSTRAZIONI DEGLI ARCHETIPI (Fase 5 "La casa che hai costruito" + certificato)
+================================================================================
+
+Il gioco cerca queste 4 immagini in questa cartella (assets/).
+Salva i 4 PNG del gatto con ESATTAMENTE questi nomi:
+
+  arch-cabina.png   ->  Cabina di pilotaggio  ->  gatto PILOTA (aviatore)
+  arch-rampa.png    ->  Rampa di lancio       ->  gatto ASTRONAUTA
+  arch-motore.png   ->  Motore motivazionale  ->  gatto PERSONAL TRAINER
+  arch-bussola.png  ->  Bussola               ->  gatto GUIDA (scout con bussola)
+
+Note:
+- Finche' i file non ci sono, il gioco mostra l'icona di riserva (nessun errore).
+- Sfondo trasparente consigliato (PNG), formato quadrato.
+- Le stesse illustrazioni compaiono anche nel certificato scaricabile.
+
+ATTENZIONE (da confermare): tra le 4 immagini fornite c'erano pilota,
+astronauta, guida (scout) e un GATTO MAGO. Manca l'illustrazione del
+"personal trainer" per il Motore motivazionale. Metti come arch-motore.png
+l'illustrazione del personal trainer quando disponibile (oppure il gatto mago,
+se preferisci cambiare il concetto del Motore).

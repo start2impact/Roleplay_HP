@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/design-system-s2i-3f5762db-1f7f-4c92-a87c-a73c95418b46/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/design-system-s2i-3f5762db-1f7f-4c92-a87c-a73c95418b46/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/design-system-s2i-3f5762db-1f7f-4c92-a87c-a73c95418b46/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/design-system-s2i-3f5762db-1f7f-4c92-a87c-a73c95418b46/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/design-system-s2i-3f5762db-1f7f-4c92-a87c-a73c95418b46/styles.css">
+  <style>
+    .gift-line { height: 8px; border-radius: 99px; background: var(--greyscale-extralight); }
+    .gift-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 99px; font-family: var(--font-paragraph); font-weight: 800; font-size: 10px; }
+    a { color: var(--brand-secondary); }
+    a:hover { color: var(--brand-base); }
+  </style>
+</helmet>
+<div style="min-height: 100vh; background: var(--ui-secondary); padding: 48px 32px 80px; font-family: var(--font-paragraph); color: var(--greyscale-dark);">
+  <div style="max-width: 1120px; margin: 0 auto;">
+
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+      <img src="assets/logo/logo-full.svg" alt="start2impact" style="height: 26px;">
+      <span style="font-family: var(--font-paragraph); font-weight: 800; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-secondary);">La nuova Casa · fine gioco</span>
+    </div>
+    <h1 style="font-family: var(--font-title); font-weight: 800; font-size: 34px; line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 8px;">Il regalo di fine gioco — 3 idee</h1>
+    <p style="font-size: 15px; line-height: 1.5; color: var(--greyscale-mid); max-width: 62ch; margin: 0 0 32px;">Bozze veloci: alla fine del gioco l'utente può scaricare un ricordo di ciò che ha costruito. Guarda le tre direzioni qui sotto e dimmi quale preferisci (e con che uso) — poi la rifinisco e la aggancio al pulsante nella schermata finale.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: start;">
+
+      <!-- 1 · Certificato -->
+      <div style="background: var(--ui-primary); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 26px; height: 26px; border-radius: 99px; background: var(--brand-primary); color: #063; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-title); font-weight: 800; font-size: 13px;">1</span>
+          <h2 style="font-family: var(--font-title); font-weight: 800; font-size: 18px; margin: 0;">Certificato</h2>
+        </div>
+        <!-- mockup A4 orizzontale -->
+        <div style="aspect-ratio: 1.414 / 1; border-radius: 10px; background: linear-gradient(160deg, #ffffff, #f5faf8); box-shadow: inset 0 0 0 1.5px var(--greyscale-extralight); padding: 16px; display: flex; flex-direction: column; gap: 9px; position: relative; overflow: hidden;">
+          <div style="position: absolute; inset: 6px; border-radius: 7px; box-shadow: inset 0 0 0 2px var(--brand-primary-light);"></div>
+          <div style="display: flex; justify-content: center;"><img src="assets/logo/logo-full.svg" alt="" style="height: 15px;"></div>
+          <div style="text-align: center; font-family: var(--font-title); font-weight: 800; font-size: 12px; color: var(--brand-secondary);">Certificato di costruzione</div>
+          <div style="text-align: center; font-family: var(--font-title); font-weight: 800; font-size: 15px; color: var(--greyscale-dark);">Mario Rossi</div>
+          <div style="margin: 0 auto; width: 60%;" class="gift-line"></div>
+          <div style="display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; margin-top: 2px;">
+            <span class="gift-chip" style="background: var(--brand-primary-light); color: var(--brand-secondary);">Cabina di pilotaggio</span>
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: auto;">
+            <div style="flex: 1;" class="gift-line"></div>
+            <div style="flex: 1;" class="gift-line"></div>
+            <div style="flex: 1;" class="gift-line"></div>
+          </div>
+        </div>
+        <p style="font-size: 13px; line-height: 1.5; color: var(--greyscale-mid); margin: 0;"><b style="color: var(--greyscale-dark);">A4 orizzontale.</b> Nome, data, archetipo della casa, arredi scelti, punti spesi e la frase-seme. Elegante, ufficiale.</p>
+        <span class="gift-chip" style="align-self: flex-start; background: var(--purple-00); color: var(--accent-dark);">Stampa · PDF/PNG</span>
+      </div>
+
+      <!-- 2 · Card social -->
+      <div style="background: var(--ui-primary); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 26px; height: 26px; border-radius: 99px; background: var(--brand-primary); color: #063; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-title); font-weight: 800; font-size: 13px;">2</span>
+          <h2 style="font-family: var(--font-title); font-weight: 800; font-size: 18px; margin: 0;">Card social</h2>
+        </div>
+        <!-- mockup 1:1 -->
+        <div style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(150deg, #1A8366, #04B585); padding: 16px; display: flex; flex-direction: column; gap: 10px; color: #fff; position: relative; overflow: hidden;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-family: var(--font-title); font-weight: 800; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9;">La mia nuova Casa</span>
+            <span style="width: 18px; height: 18px; border-radius: 99px; background: rgba(255,255,255,0.35);"></span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 2px;">
+            <div style="aspect-ratio: 1.6/1; border-radius: 7px; background: rgba(255,255,255,0.16);"></div>
+            <div style="aspect-ratio: 1.6/1; border-radius: 7px; background: rgba(255,255,255,0.16);"></div>
+            <div style="aspect-ratio: 1.6/1; border-radius: 7px; background: rgba(255,255,255,0.16);"></div>
+            <div style="aspect-ratio: 1.6/1; border-radius: 7px; background: rgba(255,255,255,0.16);"></div>
+          </div>
+          <div style="margin-top: auto; font-family: var(--font-title); font-weight: 800; font-size: 14px; line-height: 1.2;">“Ho costruito una Cabina di pilotaggio.”</div>
+        </div>
+        <p style="font-size: 13px; line-height: 1.5; color: var(--greyscale-mid); margin: 0;"><b style="color: var(--greyscale-dark);">Quadrato 1080×1080.</b> La casa costruita in griglia + una citazione. Pensata per essere condivisa.</p>
+        <span class="gift-chip" style="align-self: flex-start; background: var(--purple-00); color: var(--accent-dark);">LinkedIn / Instagram</span>
+      </div>
+
+      <!-- 3 · Scontrino -->
+      <div style="background: var(--ui-primary); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 26px; height: 26px; border-radius: 99px; background: var(--brand-primary); color: #063; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-title); font-weight: 800; font-size: 13px;">3</span>
+          <h2 style="font-family: var(--font-title); font-weight: 800; font-size: 18px; margin: 0;">Scontrino</h2>
+        </div>
+        <!-- mockup scontrino verticale -->
+        <div style="display: flex; justify-content: center; padding: 6px 0;">
+          <div style="width: 62%; background: #fffdf8; border-radius: 4px; box-shadow: 0 6px 18px rgba(0,0,0,0.12); padding: 14px 14px 18px; display: flex; flex-direction: column; gap: 8px; font-family: var(--font-paragraph);">
+            <div style="text-align: center; font-family: var(--font-title); font-weight: 800; font-size: 11px; letter-spacing: 0.08em;">EMPORIO start2impact</div>
+            <div style="border-top: 1.5px dashed var(--greyscale-light);"></div>
+            <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--greyscale-mid);"><span>Riprendi da dove eri</span><b style="color: var(--greyscale-dark);">40</b></div>
+            <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--greyscale-mid);"><span>Stato correzioni</span><b style="color: var(--greyscale-dark);">35</b></div>
+            <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--greyscale-mid);"><span>Percorso</span><b style="color: var(--greyscale-dark);">30</b></div>
+            <div style="border-top: 1.5px dashed var(--greyscale-light);"></div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 800;"><span>TOTALE</span><span style="color: var(--brand-secondary);">105 pt</span></div>
+            <div style="text-align: center; font-size: 8px; color: var(--greyscale-light); margin-top: 4px;">grazie per aver costruito con noi</div>
+          </div>
+        </div>
+        <p style="font-size: 13px; line-height: 1.5; color: var(--greyscale-mid); margin: 0;"><b style="color: var(--greyscale-dark);">Verticale, stile ricevuta.</b> Cosa ha preso e lasciato, budget speso, pezzo su misura. Giocoso, da tenere come ricordo.</p>
+        <span class="gift-chip" style="align-self: flex-start; background: var(--purple-00); color: var(--accent-dark);">Ricordo personale · PNG</span>
+      </div>
+
+    </div>
+
+    <p style="font-size: 14px; line-height: 1.5; color: var(--greyscale-mid); margin: 34px 0 0;">Dimmi quale direzione (anche più di una) e con che uso principale, e la costruisco per bene generandola coi dati reali della partita, agganciata al pulsante “scarica” nella schermata finale.</p>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

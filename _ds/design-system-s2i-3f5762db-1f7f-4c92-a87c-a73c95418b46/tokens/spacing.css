@@ -1,0 +1,43 @@
+/* start2impact — Spacing, radii, elevation & layout tokens
+   Canonical source: Design System → Spaziature (4/8px scale), Raggi, Superfici,
+   Strutture + tailwind.preset.ts boxShadow. */
+
+:root {
+	/* Spacing — linear 4/8px scale */
+	--space-0: 0;
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-8: 32px;
+	--space-10: 40px;
+	--space-12: 48px;
+	--space-16: 64px;
+	--space-20: 80px;
+
+	/* Radii — controls/tags 4px · cards/inputs/modals 8px · alerts 16px · pills full */
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 12px;
+	--radius-2xl: 16px;
+	--radius-full: 9999px;
+
+	/* Elevation — one soft card shadow; modals get a stronger one.
+	   Inputs use an inset 2px ring instead of a border. */
+	--shadow-card: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
+	--shadow-modal: 0 1.5rem 3rem rgba(6, 2, 51, 0.18);
+	--shadow-input-border: inset 0 0 0 2px #F1F5F4;
+	--shadow-input-focus: inset 0 0 0 2px #28CC9E;
+	--shadow-input-disabled: inset 0 0 0 2px #F1F5F4;
+
+	/* Layout — app shell + content container */
+	--container-max: 1110px;
+	--sidebar-w: 256px;
+	--sidebar-w-collapsed: 80px;
+	--grid-columns: 12; /* @kind other */
+	--grid-gutter: 24px;
+	--focus-ring: 2px solid var(--brand-primary);
+}

@@ -1,0 +1,134 @@
+/* start2impact — Color tokens
+   Canonical source: start2impact/frontend-monorepo → tailwind.colors.ts + tailwind.preset.ts
+   Two layers: raw palette (--mint-400, --grey-800 …) and semantic aliases
+   (--brand-primary, --ui-secondary, --feedback-error …). Components reference
+   the semantic layer; specimens reference the palette. */
+
+:root {
+	/* ---- RAW PALETTE ---- */
+
+	/* Mint — the brand green (logo, success, focus, progress) */
+	--mint-00: #EFFCF8;
+	--mint-100: #E6F8F3;
+	--mint-200: #D0F6EB;
+	--mint-300: #08F7A1; /* electric mint — logo gradient tip */
+	--mint-400: #28CC9E;
+	--mint-500: #04B585; /* brand base */
+	--mint-600: #1A8366;
+	--mint-800: #0E4938;
+
+	/* Pine — deep teal anchoring the logo gradient base */
+	--pine-100: #E6F1F0;
+	--pine-500: #2AB29D;
+	--pine-900: #007369;
+
+	/* Purple — the action accent (buttons, links, active nav) */
+	--purple-00: #F5F3FB;
+	--purple-200: #E0DCF3;
+	--purple-400: #6E5DC6;
+	--purple-500: #5938BC;
+	--purple-600: #4E3BA9;
+	--purple-800: #382B7B;
+
+	/* Greyscale — surfaces, borders, text */
+	--grey-00: #FAFCFB;
+	--grey-100: #FFFFFF;
+	--grey-200: #F1F5F4;
+	--grey-300: #FAFAFA;
+	--grey-400: #B0C2BD;
+	--grey-600: #5D7870;
+	--grey-700: #4D4D4D;
+	--grey-800: #25302D;
+	--grey-900: #222222;
+
+	/* Feedback families */
+	--blue-00: #F1F9FF;
+	--blue-200: #90CDFF;
+	--blue-400: #3CA6FF;
+	--blue-600: #0063B5;
+	--blue-900: #3066BE;
+	--green-00: #F5FBF1;
+	--green-200: #B2DC90;
+	--green-400: #79C23E;
+	--green-600: #3C611F;
+	--yellow-00: #FFFBED;
+	--yellow-200: #FFE26D;
+	--yellow-400: #FFCB00;
+	--yellow-600: #806600;
+	--orange-00: #FEF8F2;
+	--orange-200: #F8C497;
+	--orange-300: #D68E6B;
+	--orange-400: #F2994A;
+	--orange-500: #EA7317;
+	--orange-600: #944A0A;
+	--red-00: #FFF3F4;
+	--red-200: #FFA2A5;
+	--red-400: #FF5A5F;
+	--red-600: #C60007;
+	--pink-500: #E86A92;
+	--pink-900: #CA054D;
+
+	/* Extended display palette (bolder than UI — covers, social, hero) */
+	--midnight: #060233;
+	--navy: #2A2570;
+	--seafoam: #85E1C8;
+	--iris: #7070E0;
+	--neon-violet: #6743F7;
+
+	/* ---- SEMANTIC ALIASES ---- */
+
+	/* Brand (mint) */
+	--brand-base: var(--mint-500);
+	--brand-primary: var(--mint-400);
+	--brand-primary-light: var(--mint-00);
+	--brand-secondary: var(--mint-600);
+	--brand-secondary-light: var(--mint-200);
+	--brand-mid: var(--mint-600);
+	--text-brand-light: var(--mint-400);
+	--text-brand-mid: var(--mint-600);
+	--text-brand-dark: var(--mint-800);
+
+	/* Accent (purple) — actions, links, active nav */
+	--accent-mid: var(--purple-400);
+	--accent-dark: var(--purple-600);
+
+	/* UI surfaces */
+	--ui-primary: var(--grey-100);   /* cards */
+	--ui-secondary: var(--grey-00);  /* page background */
+
+	/* Greyscale roles */
+	--greyscale-base: var(--grey-100);
+	--greyscale-extralight: var(--grey-200);
+	--greyscale-light: var(--grey-400);
+	--greyscale-mid: var(--grey-600);
+	--greyscale-dark: var(--grey-800);
+
+	/* Feedback — light tint + saturated icon + dark text trio */
+	--feedback-info: var(--blue-400);
+	--feedback-info-light: var(--blue-00);
+	--feedback-info-text: var(--blue-600);
+	--feedback-success: var(--green-400);
+	--feedback-success-light: var(--green-00);
+	--feedback-success-text: var(--green-600);
+	--feedback-waiting: var(--yellow-400);
+	--feedback-waiting-light: var(--yellow-00);
+	--feedback-waiting-text: var(--yellow-600);
+	--feedback-warning: var(--orange-400);
+	--feedback-warning-light: var(--orange-00);
+	--feedback-warning-text: var(--orange-600);
+	--feedback-error: var(--red-400);
+	--feedback-error-light: var(--red-00);
+	--feedback-error-text: var(--red-600);
+
+	/* Topic — one color per course category */
+	--topic-marketing: var(--orange-500);
+	--topic-design: var(--pink-500);
+	--topic-dev: var(--blue-900);
+	--topic-blockchain: var(--purple-500);
+	--topic-data: var(--pine-500);
+	--topic-startup: var(--pink-900);
+	--topic-mindset: var(--orange-300);
+
+	/* The logo / brand gradient (verde pino → mint elettrico, ~45°) */
+	--gradient-brand: linear-gradient(45deg, #007369, #08F7A1); /* @kind color */
+}

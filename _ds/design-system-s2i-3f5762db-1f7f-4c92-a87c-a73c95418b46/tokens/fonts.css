@@ -1,0 +1,50 @@
+/* start2impact — Webfonts
+   • Inter (body/UI) and Inter Tight (headings, all scales) are the live families,
+     loaded from Google Fonts — self-hosted in production; swap the @import for
+     local woff2 if you have the licensed files.
+   • More Sugar (brand display) is self-hosted from assets/fonts/.
+   • Montserrat is RETIRED (2026): kept self-hosted below only as a legacy
+     fallback for old artifacts; new work uses Inter Tight for headings.
+   Paths are relative to this file (tokens/). */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@500;600;700;800;900&family=Montserrat:wght@500;600;800;900&family=Permanent+Marker&display=swap');
+
+/* Montserrat — RETIRED (legacy fallback for old artifacts only) */
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("../assets/fonts/Montserrat-400.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("../assets/fonts/Montserrat-700.woff2") format("woff2");
+}
+
+/* More Sugar — handwritten brand display face */
+@font-face {
+	font-family: "More Sugar";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("../assets/fonts/MoreSugar-Regular.ttf") format("truetype");
+}
+@font-face {
+	font-family: "More Sugar";
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: url("../assets/fonts/MoreSugar-Thin.ttf") format("truetype");
+}
+/* More Sugar Extras — alternate ornaments / swashes */
+@font-face {
+	font-family: "More Sugar Extras";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("../assets/fonts/MoreSugar-Extras.ttf") format("truetype");
+}
