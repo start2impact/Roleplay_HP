@@ -824,7 +824,7 @@
 
       nameDone && React.createElement(WizBeat, { key: "team",
         reply: React.createElement(ChipGroup, { options: TEAMS, value: id.team, onChange: (v) => set({ team: v }) }) },
-        React.createElement("p", null, B(name), ", piacere! Prima dell'incendio, in che team lavoravi?")),
+        React.createElement("p", null, B(name), ", piacere! Prima dell'incendio, di quale team facevi parte?")),
 
       nameDone && id.team && React.createElement(WizBeat, { key: "tenure",
         reply: React.createElement(ChipGroup, { options: TENURES, value: id.tenure, onChange: (v) => set({ tenure: v }) }) },
