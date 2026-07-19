@@ -48,15 +48,15 @@
   const TEAMS = ["Education", "Growth", "Customer Care", "Prodotto"];
   const TENURES = ["< 1 anno", "1-2 anni", "2+ anni"];
 
-  // ── Modalità speciale (chi entra nell'emporio con solo 40 pt di base) ──
-  // Aster propone un recupero: rispondere a queste domande porta il budget
-  // fino a un massimo di 200 pt (40 base + 4 × 40).
-  const SPECIAL_STEP = 40;
+  // ── Modalità speciale (recupero punti) ──
+  // Domande a risposta aperta sul punto di vista reale di chi gioca
+  // (persone del team, di team diversi): ogni risposta vale +SPECIAL_STEP pt.
+  const SPECIAL_STEP = 10;
   const SPECIAL_QS = [
-    { id: "freq", q: "Quanto spesso apri la Home di start2impact?", opts: ["Ogni giorno", "Qualche volta a settimana", "Di rado"] },
-    { id: "first", q: "Appena entri, cosa cerchi per prima cosa?", opts: ["Dove ero rimasto", "I miei progressi", "Cosa fare oggi"] },
-    { id: "miss", q: "Cosa senti che manca di più oggi?", opts: ["Chiarezza sul percorso", "Motivazione a continuare", "Contatto con le persone"] },
-    { id: "feel", q: "Come ti fa sentire la Home di adesso?", opts: ["A mio agio", "Un po' spaesato", "Sopraffatto"] },
+    { id: "ruolo", q: "Nel tuo lavoro di tutti i giorni, quando e perché ti capita di avere a che fare con la Home?", ph: "Es. la apro quando devo controllare a che punto è uno studente…" },
+    { id: "segnali", q: "Cosa senti dire più spesso dagli studenti a proposito della Home di oggi?", ph: "Un ticket ricorrente, una domanda in chat, un feedback che ti è rimasto in mente…" },
+    { id: "team", q: "Dal punto di vista del tuo team, cosa dovrebbe fare meglio la nuova Home?", ph: "Cosa vi semplificherebbe il lavoro o togliereste di mezzo…" },
+    { id: "dato", q: "C'è un'informazione che oggi è difficile da trovare e che la Home dovrebbe rendere evidente?", ph: "Per gli studenti o per voi del team…" },
   ];
 
   // ── Raccolta risposte ───────────────────────────────────────
@@ -75,30 +75,30 @@
   // Catalogo della nuova Home: prezzo = priorità/costo, arch = teoria-Home.
   // (nome reale nel data model; qui la "pelle" leggibile in 1 secondo)
   const CATALOG = [
-    { id: "resume_course",        name: "Riprendi da dove eri",        real: "Ripresa ultimo corso",     price: 40, icon: "book-bookmark",    arch: "cabina",  what: "Riapre con un tocco l'ultima lezione lasciata a metà, senza cercarla tra i corsi. Togli l'attrito del «dov'ero rimasto?» e riprendi a studiare in pochi secondi." },
-    { id: "project_status",       name: "Stato delle correzioni",      real: "In revisione · feedback",  price: 35, icon: "clipboard-list",   arch: "cabina",  what: "Mostra in evidenza lo stato del tuo progetto: in revisione oppure feedback pronto. Sai sempre se la palla è a te o al tutor, senza controllare di continuo." },
-    { id: "path_progress",        name: "Percorso e avanzamento",      real: "Progress del master",      price: 30, icon: "list-check",       arch: "bussola", what: "La barra di avanzamento del Master ti dice quanto manca al traguardo. Un colpo d'occhio che rende concreto il percorso e tiene alta la motivazione." },
-    { id: "personal_suggestions", name: "Suggerimenti personalizzati", real: "Il prossimo passo per te", price: 30, icon: "flag",            arch: "bussola", what: "Ti indica il prossimo passo giusto in base a dove sei arrivato. Niente pagina bianca: sai sempre cosa fare appena entri." },
-    { id: "portfolio_review",     name: "Esercitazione quotidiana in coppia", real: "Buddy + tutor",      price: 30, icon: "handshake",       arch: "motore",  what: "Ogni giorno un'esercitazione a difficoltà crescente, in coppia con un «buddy» e con i tutor a supporto. Impari facendo e non resti mai solo davanti al problema." },
-    { id: "daily_exercise",       name: "Esercizio del giorno",        real: "Consegna + correzione",    price: 25, icon: "pen-to-square",    arch: "cabina",  what: "Un esercizio al giorno da svolgere e consegnare, corretto da un tutor. Ritmo costante e feedback rapido: la pratica diventa un'abitudine." },
-    { id: "next_master",          name: "Il tuo prossimo master",      real: "Valore del rinnovo",       price: 30, icon: "rocket",          arch: "rampa",   what: "Ti mostra il Master naturale dopo questo, con il valore concreto del rinnovo. Vedi dove puoi arrivare prima ancora di aver finito." },
-    { id: "ai_path",              name: "Percorso su misura con l'AI", real: "Onboarding intelligente",  price: 30, icon: "gem",             arch: "bussola", what: "Al primo accesso scrivi cosa vuoi imparare e in meno di un minuto l'AI costruisce un percorso su misura pescando da oltre 12.000 lezioni. Onboarding personale, zero configurazione." },
-    { id: "dashboard_counters",   name: "Cruscotto a 4 contatori",     real: "Ore · concetti · lezioni · progetti", price: 25, icon: "clipboard-list-check", arch: "cabina", what: "Quattro contatori sempre in vista: ore di studio, concetti, lezioni e progetti superati. La tua costanza diventa un numero che cresce sotto i tuoi occhi." },
-    { id: "personal_dashboard",   name: "Cruscotto personale",         real: "Tutto in una schermata",   price: 30, icon: "list-check",       arch: "cabina",  what: "Voti, medie, presenze, minuti online e competenze acquisite: tutto in un'unica schermata. Il quadro completo dei progressi senza saltare da una pagina all'altra." },
-    { id: "projects_portfolio",   name: "Progetti e portfolio",        real: "Collegato a GitHub",       price: 35, icon: "folder",          arch: "rampa",   what: "I progetti si collegano a GitHub, il «curriculum» di chi programma, e ricevono la valutazione dei docenti. Studiare e costruire il portfolio diventano la stessa cosa." },
-    { id: "gamification",         name: "Gamification",                real: "Punti, badge, streak",     price: 25, icon: "medal",           arch: "motore",  what: "Punti, badge e streak trasformano lo studio in progressi visibili. Piccole ricompense che tengono viva la motivazione giorno dopo giorno." },
-    { id: "weighted_points",      name: "Punti pesati per competenza", real: "Pratica > teoria",         price: 20, icon: "gem",             arch: "motore",  what: "I punti pesano la pratica: 50 un progetto, 25 una lezione, 10 un quiz, 5 un video. Ti spinge a fare, non solo a guardare." },
-    { id: "weekly_streak",        name: "Streak settimanale",          real: "Non giornaliera",          price: 15, icon: "fire",            arch: "motore",  what: "Scegli quanti giorni a settimana vuoi studiare; ogni settimana centrata allunga la serie. Un obiettivo sostenibile che rispetta i tuoi ritmi reali." },
-    { id: "weekly_leaderboard",   name: "Classifiche settimanali",     real: "Piccoli gruppi casuali",   price: 20, icon: "medal", arch: "motore",  what: "Piccoli gruppi casuali che si sfidano sui punti della settimana. La competizione giusta: leggera, alla tua portata, mai schiacciante." },
-    { id: "job_opportunities",    name: "Opportunità di lavoro",       real: "Career service",           price: 25, icon: "briefcase",       arch: "rampa",   what: "Ogni settimana nuove offerte di lavoro interne, raccolte in un unico posto. Le opportunità arrivano a te mentre studi." },
-    { id: "career_home",          name: "Carriera in home",            real: "Colloqui + risorse",       price: 30, icon: "briefcase",       arch: "rampa",   what: "Simulazioni di colloquio e risorse per il lavoro, già nella prima schermata. La preparazione alla carriera entra nella routine di studio." },
-    { id: "cert_thresholds",      name: "Certificato a soglie",        real: "Mancano X corsi",          price: 20, icon: "award",           arch: "motore",  what: "Ti dice quanti corsi mancano al prossimo certificato: si sblocca all'80% del corso più un quiz e si condivide su LinkedIn con un click. Un traguardo chiaro e spendibile." },
-    { id: "cert_conditions",      name: "Certificato con condizioni",  real: "Presenze + esercitazioni", price: 20, icon: "circle-check",    arch: "rampa",   what: "Il certificato arriva con il 70% di presenze e il 70% di esercitazioni consegnate. Regole trasparenti: sai esattamente cosa serve per ottenerlo." },
-    { id: "calendar_events",      name: "Calendario ed eventi",        real: "Appuntamenti dell'anno",   price: 20, icon: "calendar-clock",  arch: "motore",  what: "Tutti gli appuntamenti dell'anno in un calendario, con eventi e ospiti da rivedere. Non perdi più una data e recuperi ciò che ti sei perso." },
-    { id: "community_feed",       name: "Community fuori dalla piattaforma", real: "Circle",  price: 20, icon: "comments",        arch: "motore",  what: "La community vive su Circle. Confronto e supporto tra pari sempre a portata di mano." },
-    { id: "coach_access",         name: "Accesso rapido al coach",     real: "Il tuo riferimento",       price: 20, icon: "message-dots",    arch: "motore",  what: "Un accesso rapido per scrivere al tuo coach di riferimento. Quando ti blocchi, l'aiuto è a un tocco di distanza." },
-    { id: "saved_materials",      name: "Materiali salvati",           real: "Risorse a portata di click", price: 15, icon: "bookmark",     arch: "cabina",  what: "Le risorse che hai salvato, raccolte e pronte al click. La tua libreria personale, senza cercare due volte la stessa cosa." },
-    { id: "weekly_goal",          name: "Obiettivo della settimana",   real: "Micro-goal settimanale",   price: 15, icon: "circle-check",    arch: "cabina",  what: "Un micro-obiettivo settimanale per non perdere il ritmo. Piccolo, concreto, raggiungibile: mantiene viva l'abitudine allo studio." },
+    { id: "resume_course",        name: "Riprendi da dove eri",        real: "Ripresa ultimo corso",     price: 24, icon: "book-bookmark",    arch: "cabina",  what: "Riapre con un tocco l'ultima lezione lasciata a metà, senza cercarla tra i corsi. Togli l'attrito del «dov'ero rimasto?» e riprendi a studiare in pochi secondi." },
+    { id: "project_status",       name: "Stato delle correzioni",      real: "In revisione · feedback",  price: 20, icon: "clipboard-list",   arch: "cabina",  what: "Mostra in evidenza lo stato del tuo progetto: in revisione oppure feedback pronto. Sai sempre se la palla è a te o al tutor, senza controllare di continuo." },
+    { id: "path_progress",        name: "Percorso e avanzamento",      real: "Progress del master",      price: 18, icon: "list-check",       arch: "bussola", what: "La barra di avanzamento del Master ti dice quanto manca al traguardo. Un colpo d'occhio che rende concreto il percorso e tiene alta la motivazione." },
+    { id: "personal_suggestions", name: "Suggerimenti personalizzati", real: "Il prossimo passo per te", price: 18, icon: "flag",            arch: "bussola", what: "Ti indica il prossimo passo giusto in base a dove sei arrivato. Niente pagina bianca: sai sempre cosa fare appena entri." },
+    { id: "portfolio_review",     name: "Esercitazione quotidiana in coppia", real: "Buddy + tutor",      price: 18, icon: "handshake",       arch: "motore",  what: "Ogni giorno un'esercitazione a difficoltà crescente, in coppia con un «buddy» e con i tutor a supporto. Impari facendo e non resti mai solo davanti al problema." },
+    { id: "daily_exercise",       name: "Esercizio del giorno",        real: "Consegna + correzione",    price: 14, icon: "pen-to-square",    arch: "cabina",  what: "Un esercizio al giorno da svolgere e consegnare, corretto da un tutor. Ritmo costante e feedback rapido: la pratica diventa un'abitudine." },
+    { id: "next_master",          name: "Il tuo prossimo master",      real: "Valore del rinnovo",       price: 18, icon: "rocket",          arch: "rampa",   what: "Ti mostra il Master naturale dopo questo, con il valore concreto del rinnovo. Vedi dove puoi arrivare prima ancora di aver finito." },
+    { id: "ai_path",              name: "Percorso su misura con l'AI", real: "Onboarding intelligente",  price: 18, icon: "gem",             arch: "bussola", what: "Al primo accesso scrivi cosa vuoi imparare e in meno di un minuto l'AI costruisce un percorso su misura pescando da oltre 12.000 lezioni. Onboarding personale, zero configurazione." },
+    { id: "dashboard_counters",   name: "Cruscotto a 4 contatori",     real: "Ore · concetti · lezioni · progetti", price: 14, icon: "clipboard-list-check", arch: "cabina", what: "Quattro contatori sempre in vista: ore di studio, concetti, lezioni e progetti superati. La tua costanza diventa un numero che cresce sotto i tuoi occhi." },
+    { id: "personal_dashboard",   name: "Cruscotto personale",         real: "Tutto in una schermata",   price: 18, icon: "list-check",       arch: "cabina",  what: "Voti, medie, presenze, minuti online e competenze acquisite: tutto in un'unica schermata. Il quadro completo dei progressi senza saltare da una pagina all'altra." },
+    { id: "projects_portfolio",   name: "Progetti e portfolio",        real: "Collegato a GitHub",       price: 20, icon: "folder",          arch: "rampa",   what: "I progetti si collegano a GitHub, il «curriculum» di chi programma, e ricevono la valutazione dei docenti. Studiare e costruire il portfolio diventano la stessa cosa." },
+    { id: "gamification",         name: "Gamification",                real: "Punti, badge, streak",     price: 14, icon: "medal",           arch: "motore",  what: "Punti, badge e streak trasformano lo studio in progressi visibili. Piccole ricompense che tengono viva la motivazione giorno dopo giorno." },
+    { id: "weighted_points",      name: "Punti pesati per competenza", real: "Pratica > teoria",         price: 12, icon: "gem",             arch: "motore",  what: "I punti pesano la pratica: 50 un progetto, 25 una lezione, 10 un quiz, 5 un video. Ti spinge a fare, non solo a guardare." },
+    { id: "weekly_streak",        name: "Streak settimanale",          real: "Non giornaliera",          price: 8, icon: "fire",            arch: "motore",  what: "Scegli quanti giorni a settimana vuoi studiare; ogni settimana centrata allunga la serie. Un obiettivo sostenibile che rispetta i tuoi ritmi reali." },
+    { id: "weekly_leaderboard",   name: "Classifiche settimanali",     real: "Piccoli gruppi casuali",   price: 12, icon: "medal", arch: "motore",  what: "Piccoli gruppi casuali che si sfidano sui punti della settimana. La competizione giusta: leggera, alla tua portata, mai schiacciante." },
+    { id: "job_opportunities",    name: "Opportunità di lavoro",       real: "Career service",           price: 14, icon: "briefcase",       arch: "rampa",   what: "Ogni settimana nuove offerte di lavoro interne, raccolte in un unico posto. Le opportunità arrivano a te mentre studi." },
+    { id: "career_home",          name: "Carriera in home",            real: "Colloqui + risorse",       price: 18, icon: "briefcase",       arch: "rampa",   what: "Simulazioni di colloquio e risorse per il lavoro, già nella prima schermata. La preparazione alla carriera entra nella routine di studio." },
+    { id: "cert_thresholds",      name: "Certificato a soglie",        real: "Mancano X corsi",          price: 12, icon: "award",           arch: "motore",  what: "Ti dice quanti corsi mancano al prossimo certificato: si sblocca all'80% del corso più un quiz e si condivide su LinkedIn con un click. Un traguardo chiaro e spendibile." },
+    { id: "cert_conditions",      name: "Certificato con condizioni",  real: "Presenze + esercitazioni", price: 12, icon: "circle-check",    arch: "rampa",   what: "Il certificato arriva con il 70% di presenze e il 70% di esercitazioni consegnate. Regole trasparenti: sai esattamente cosa serve per ottenerlo." },
+    { id: "calendar_events",      name: "Calendario ed eventi",        real: "Appuntamenti dell'anno",   price: 12, icon: "calendar-clock",  arch: "motore",  what: "Tutti gli appuntamenti dell'anno in un calendario, con eventi e ospiti da rivedere. Non perdi più una data e recuperi ciò che ti sei perso." },
+    { id: "community_feed",       name: "Community fuori dalla piattaforma", real: "Circle",  price: 12, icon: "comments",        arch: "motore",  what: "La community vive su Circle. Confronto e supporto tra pari sempre a portata di mano." },
+    { id: "coach_access",         name: "Accesso rapido al coach",     real: "Il tuo riferimento",       price: 12, icon: "message-dots",    arch: "motore",  what: "Un accesso rapido per scrivere al tuo coach di riferimento. Quando ti blocchi, l'aiuto è a un tocco di distanza." },
+    { id: "saved_materials",      name: "Materiali salvati",           real: "Risorse a portata di click", price: 8, icon: "bookmark",     arch: "cabina",  what: "Le risorse che hai salvato, raccolte e pronte al click. La tua libreria personale, senza cercare due volte la stessa cosa." },
+    { id: "weekly_goal",          name: "Obiettivo della settimana",   real: "Micro-goal settimanale",   price: 8, icon: "circle-check",    arch: "cabina",  what: "Un micro-obiettivo settimanale per non perdere il ritmo. Piccolo, concreto, raggiungibile: mantiene viva l'abitudine allo studio." },
   ];
   const byId = Object.fromEntries(CATALOG.map((f) => [f.id, f]));
 
@@ -107,7 +107,8 @@
     { id: "master_hero", name: "Il tuo Master e l'avanzamento", real: "Card hero + barra completamento", icon: "graduation-cap", desc: "La card in cima alla Home: il tuo Master e la barra di completamento." },
     { id: "corsi_master", name: "I Corsi del tuo Master", real: "Lista dei corsi del percorso", icon: "book-bookmark", desc: "L'elenco dei corsi che compongono il tuo percorso di studio." },
     { id: "teoria_test_progetto", name: "Teoria · Test · Progetto", real: "Le tre card azione del corso", icon: "clipboard-list-check", desc: "Le tre azioni di ogni corso: studi la teoria, fai il test, consegni il progetto." },
-    { id: "punti_streak", name: "Punti e streak", real: "Gamification in sidebar", icon: "fire", desc: "I punti che accumuli e la streak dei giorni consecutivi di studio." },
+    { id: "punti", name: "Punti", real: "Gamification in sidebar", icon: "medal", desc: "I punti che accumuli studiando e completando i corsi." },
+    { id: "streak", name: "Streak", real: "Gamification in sidebar", icon: "fire", desc: "La streak dei giorni consecutivi di studio." },
     { id: "chat_supporto", name: "Chat di supporto", real: "Widget flottante di aiuto", icon: "comments", desc: "Il widget flottante per chiedere aiuto quando ti blocchi." },
     { id: "notifiche", name: "Notifiche", real: "Campanella in alto a destra", icon: "bell", desc: "La campanella in alto: avvisi su corsi, progetti e messaggi." },
     { id: "skill_corso", name: "Skill del corso", real: "Tag Skill principali", icon: "award", desc: "I tag delle competenze che stai sviluppando in ogni corso." },
@@ -117,7 +118,7 @@
   ];
   const shelfById = Object.fromEntries(SHELF.map((m) => [m.id, m]));
   // Valori di vendita al mercatino (stessi del Trasloco, atto 1)
-  const SHELF_VALUE = { master_hero: 35, corsi_master: 35, teoria_test_progetto: 30, punti_streak: 20, chat_supporto: 20, notifiche: 15, skill_corso: 15, saluto: 15, profilo_sidebar: 15, carriera_lavoro: 20 };
+  const SHELF_VALUE = { master_hero: 35, corsi_master: 35, teoria_test_progetto: 30, punti: 10, streak: 10, chat_supporto: 20, notifiche: 15, skill_corso: 15, saluto: 15, profilo_sidebar: 15, carriera_lavoro: 20 };
   SHELF.forEach((m) => { m.value = SHELF_VALUE[m.id] || 15; });
 
   // ── La storia: la casa sta bruciando. Ogni modulo della vecchia Home è
@@ -129,7 +130,8 @@
     master_hero: "La mappa del percorso, che stacchi dal muro tra il fumo",
     corsi_master: "La libreria dei manuali, già lambita dalle fiamme",
     teoria_test_progetto: "La scrivania a tre cassetti, da svuotare in fretta",
-    punti_streak: "Il barattolo delle monete, da afferrare al volo",
+    punti: "Il barattolo delle monete, da afferrare al volo",
+    streak: "Il calendario coi giorni segnati, ancora appeso al muro",
     chat_supporto: "Il citofono che squilla a vuoto nel fumo",
     notifiche: "La cassetta della posta sulla soglia in fiamme",
     skill_corso: "Gli attestati in cornice da strappare al fuoco",
@@ -191,15 +193,16 @@
     <span style={{ position: "relative", display: "inline-flex", color: LT }}><Icon name="bell" size={16} /><span style={{ position: "absolute", top: -2, right: -2, width: 7, height: 7, borderRadius: 99, background: "var(--feedback-error)", border: "1.5px solid " + WHITE }} /></span>
   );
   const SCENES = {
-    master_hero: () => (<Panel style={{ gap: 6 }}><Row style={{ alignItems: "flex-start", gap: 10 }}><Row style={{ flex: 1.6, justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 9, color: "var(--greyscale-dark)", whiteSpace: "nowrap" }}>Il Master che hai scelto è:</span><span style={{ color: "var(--greyscale-dark)", display: "inline-flex", flexShrink: 0 }}><Icon name="pen-to-square" size={11} /></span></Row><span style={{ flex: 1, fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 9, color: "var(--greyscale-dark)", whiteSpace: "nowrap" }}>Percorso completo al:</span></Row><Row style={{ gap: 10, alignItems: "stretch" }}><div style={{ flex: 1.6, background: MINTL, borderRadius: "var(--radius-md)", padding: "8px 10px", display: "flex", alignItems: "center" }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 11.5, color: "var(--greyscale-dark)", lineHeight: 1.15, whiteSpace: "nowrap" }}>Lorem ipsum e Agenti AI</span></div><div style={{ flex: 1, background: MINTL, borderRadius: "var(--radius-md)", padding: "8px 10px", display: "flex", alignItems: "center", gap: 6 }}><div style={{ flex: 1 }}><Bar pct={100} c="var(--green-600)" /></div><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 9, color: "var(--greyscale-dark)", flexShrink: 0 }}>100%</span></div></Row></Panel>),
-    corsi_master: () => { const Tile = ({ c, ic }) => (<span style={{ width: 22, height: 22, borderRadius: 6, background: c, color: WHITE, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={ic} size={11} /></span>); const Ring = ({ on, ic }) => (<span style={{ width: 15, height: 15, borderRadius: 99, border: "2px solid " + (on ? "var(--green-600)" : EX), color: on ? "var(--green-600)" : LT, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={ic} size={7} /></span>); const CRow = ({ c, ic, t, meta, on }) => (<div style={{ background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-card)", padding: "6px 8px", display: "flex", alignItems: "center", gap: 7 }}><Tile c={c} ic={ic} /><div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 9.5, color: "var(--greyscale-dark)", lineHeight: 1.1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t}</span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 7, color: LT, whiteSpace: "nowrap" }}>{meta}</span></div><Ring ic="book" /><Ring on={on} ic="clipboard-list-check" /><span style={{ color: LT, display: "inline-flex", flexShrink: 0 }}><Icon name="plus" size={9} /></span></div>); return (<div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 5 }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 10, color: "var(--greyscale-dark)" }}>I Corsi del tuo Master:</span><CRow c="#E5527C" ic="angle-right" t="Introduzione al Lorem Ipsum" meta="Test: 70/100 · Progetto: 1/200" on /><CRow c="#25BCC9" ic="gem" t="Lorem e Prompt Engineering" meta="19 Ore di Teoria · 300 pt Max" /></div>); },
+    master_hero: () => (<Panel style={{ gap: 6 }}><Row style={{ alignItems: "flex-start", gap: 10 }}><Row style={{ flex: 1.6, justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 9, color: "var(--greyscale-dark)", whiteSpace: "nowrap" }}>Il Master che hai scelto è:</span><span style={{ color: "var(--greyscale-dark)", display: "inline-flex", flexShrink: 0 }}><Icon name="pen-to-square" size={11} /></span></Row><span style={{ flex: 1, fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 9, color: "var(--greyscale-dark)", whiteSpace: "nowrap" }}>Percorso completo al:</span></Row><Row style={{ gap: 10, alignItems: "stretch" }}><div style={{ flex: 1.6, background: MINTL, borderRadius: "var(--radius-md)", padding: "8px 10px", display: "flex", alignItems: "center" }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 11.5, color: "var(--greyscale-dark)", lineHeight: 1.15, whiteSpace: "nowrap" }}>Sviluppo Web e Agenti AI</span></div><div style={{ flex: 1, background: MINTL, borderRadius: "var(--radius-md)", padding: "8px 10px", display: "flex", alignItems: "center", gap: 6 }}><div style={{ flex: 1 }}><Bar pct={100} c="var(--green-600)" /></div><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 9, color: "var(--greyscale-dark)", flexShrink: 0 }}>100%</span></div></Row></Panel>),
+    corsi_master: () => { const Tile = ({ c, ic }) => (<span style={{ width: 22, height: 22, borderRadius: 6, background: c, color: WHITE, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={ic} size={11} /></span>); const Ring = ({ on, ic }) => (<span style={{ width: 15, height: 15, borderRadius: 99, border: "2px solid " + (on ? "var(--green-600)" : EX), color: on ? "var(--green-600)" : LT, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={ic} size={7} /></span>); const CRow = ({ c, ic, t, meta, on }) => (<div style={{ background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-card)", padding: "6px 8px", display: "flex", alignItems: "center", gap: 7 }}><Tile c={c} ic={ic} /><div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 9.5, color: "var(--greyscale-dark)", lineHeight: 1.1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t}</span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 7, color: LT, whiteSpace: "nowrap" }}>{meta}</span></div><Ring ic="book" /><Ring on={on} ic="clipboard-list-check" /><span style={{ color: LT, display: "inline-flex", flexShrink: 0 }}><Icon name="plus" size={9} /></span></div>); return (<div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 5 }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 10, color: "var(--greyscale-dark)" }}>I Corsi del tuo Master:</span><CRow c="#E5527C" ic="angle-right" t="Introduzione agli Agenti AI" meta="Test: 70/100 · Progetto: 1/200" on /><CRow c="#25BCC9" ic="gem" t="Basi di Prompt Engineering" meta="19 Ore di Teoria · 300 pt Max" /></div>); },
     teoria_test_progetto: () => { const Ring = ({ on, ic }) => (<span style={{ width: 18, height: 18, borderRadius: 99, border: "3px solid " + (on ? "var(--green-600)" : EX), color: on ? "var(--green-600)" : LT, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={ic} size={8} /></span>); const Btn = ({ fill, children }) => (<span style={{ display: "block", textAlign: "center", padding: "4px 3px", borderRadius: 5, background: fill ? PURP : WHITE, color: fill ? WHITE : PURP, border: fill ? "none" : "1px solid " + PURP, fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 6.5, letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{children}</span>); const Card = ({ on, ic, t, btn, fill }) => (<div style={{ flex: 1, minWidth: 0, background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-card)", padding: "8px 7px", display: "flex", flexDirection: "column", gap: 7 }}><div style={{ display: "flex", alignItems: "center", gap: 5 }}><Ring on={on} ic={ic} /><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 8, color: "var(--greyscale-dark)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t}</span></div><Btn fill={fill}>{btn}</Btn></div>); return (<Row style={{ gap: 6, width: "100%", alignItems: "stretch" }}><Card ic="book" t="Teoria da completare" btn="VAI ALLA TEORIA" fill /><Card on ic="clipboard-list-check" t="Test - 70/100" btn="VAI AL TEST" /><Card on ic="file-signature" t="Progetto 1/200" btn="VISUALIZZA FEEDBACK" fill /></Row>); },
-    punti_streak: () => (<Panel style={{ gap: 6, alignItems: "center" }}><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 11, color: "var(--greyscale-dark)" }}>Lorem Ipsum</span><Row style={{ gap: 4 }}><span style={{ color: "var(--greyscale-dark)", display: "inline-flex" }}><Icon name="medal" size={11} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 10, color: "var(--greyscale-dark)" }}>15450pt</span></Row><Row style={{ gap: 6, alignSelf: "stretch", alignItems: "flex-start" }}><span style={{ width: 20, height: 20, borderRadius: 6, background: "var(--yellow-100)", color: "var(--yellow-600)", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="fire" size={11} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 600, fontSize: 8.5, color: LT, lineHeight: 1.3 }}>0 giorni consecutivi su start2impact!</span></Row></Panel>),
-    chat_supporto: () => (<div style={{ position: "relative", width: "100%", minHeight: 96, display: "flex", justifyContent: "center" }}><div style={{ position: "relative", width: "78%", marginTop: 10 }}><Row style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", gap: 0, zIndex: 2 }}><Avatar letter="L" from="#2b2b2b" to="#555" dim={22} /><span style={{ marginLeft: -7, display: "inline-flex" }}><Avatar letter="I" from="#6b4a3f" to="#a3776a" dim={22} /></span></Row><div style={{ position: "relative", background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "0 6px 16px rgba(0,0,0,0.12)", padding: "22px 12px 20px" }}><span style={{ position: "absolute", top: 7, right: 9, color: "var(--greyscale-dark)", display: "inline-flex" }}><Icon name="xmark" size={9} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 600, fontSize: 9.5, color: "var(--greyscale-dark)", display: "block", textAlign: "center" }}>Ciao! Come possiamo aiutarti?</span></div><span style={{ position: "absolute", right: -12, bottom: -14, width: 34, height: 34, borderRadius: 99, background: MINT, color: WHITE, display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: "var(--shadow-card)" }}><Icon name="comments" size={15} /></span></div></div>),
+    punti: () => (<Panel style={{ gap: 6, alignItems: "center" }}><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 11, color: "var(--greyscale-dark)" }}>Mario Rossi</span><Row style={{ gap: 4 }}><span style={{ color: "var(--greyscale-dark)", display: "inline-flex" }}><Icon name="medal" size={11} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 10, color: "var(--greyscale-dark)" }}>15450pt</span></Row></Panel>),
+    streak: () => (<Panel style={{ gap: 6, alignItems: "center" }}><Row style={{ gap: 6, alignSelf: "stretch", alignItems: "flex-start" }}><span style={{ width: 20, height: 20, borderRadius: 6, background: "var(--yellow-100)", color: "var(--yellow-600)", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="fire" size={11} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 600, fontSize: 8.5, color: LT, lineHeight: 1.3 }}>0 giorni consecutivi su start2impact!</span></Row></Panel>),
+    chat_supporto: () => (<div style={{ position: "relative", width: "100%", minHeight: 96, display: "flex", justifyContent: "center" }}><div style={{ position: "relative", width: "78%", marginTop: 10 }}><Row style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", gap: 0, zIndex: 2 }}><Avatar letter="M" from="#2b2b2b" to="#555" dim={22} /><span style={{ marginLeft: -7, display: "inline-flex" }}><Avatar letter="I" from="#6b4a3f" to="#a3776a" dim={22} /></span></Row><div style={{ position: "relative", background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "0 6px 16px rgba(0,0,0,0.12)", padding: "22px 12px 20px" }}><span style={{ position: "absolute", top: 7, right: 9, color: "var(--greyscale-dark)", display: "inline-flex" }}><Icon name="xmark" size={9} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 600, fontSize: 9.5, color: "var(--greyscale-dark)", display: "block", textAlign: "center" }}>Ciao! Come possiamo aiutarti?</span></div><span style={{ position: "absolute", right: -12, bottom: -14, width: 34, height: 34, borderRadius: 99, background: MINT, color: WHITE, display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: "var(--shadow-card)" }}><Icon name="comments" size={15} /></span></div></div>),
     notifiche: () => (<div style={{ position: "relative", width: "100%", minHeight: 92 }}><span style={{ position: "absolute", top: 0, right: 6, width: 26, height: 26, borderRadius: 7, background: MINT, color: WHITE, display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: "var(--shadow-card)" }}><Icon name="bell" size={13} /></span><div style={{ position: "absolute", top: 34, left: 0, right: 0, background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "0 6px 16px rgba(0,0,0,0.12)", overflow: "hidden" }}><div style={{ padding: "8px 10px", borderBottom: "1px solid " + MINTL }}><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 9.5, color: "var(--greyscale-dark)" }}>Notifiche</span></div><div style={{ padding: "9px 10px" }}><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 600, fontSize: 9, color: "var(--greyscale-dark)" }}>Non ci sono notifiche</span></div></div></div>),
     skill_corso: () => (<Panel style={{ gap: 6 }}><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 8.5, color: MINTD }}>Skill Principali</span><Row style={{ flexWrap: "wrap", gap: 5 }}>{["Wireframing", "People Oriented"].map((s) => (<span key={s} style={{ padding: "3px 8px", borderRadius: 6, border: "1.5px solid var(--greyscale-extralight)", background: WHITE, fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 8, color: "var(--greyscale-dark)", whiteSpace: "nowrap" }}>{s}</span>))}</Row></Panel>),
     saluto: () => (<Panel style={{ gap: 6 }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 16, color: "var(--greyscale-dark)", lineHeight: 1 }}>Ciao Mario</span><Line w="62%" h={5} /></Panel>),
-    profilo_sidebar: () => (<div style={{ width: "100%", display: "flex", alignItems: "stretch", gap: 0, background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-card)", overflow: "hidden" }}><div style={{ width: "46%", borderRight: "1px solid var(--greyscale-extralight)", padding: "8px 6px", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}><span style={{ display: "inline-flex", padding: 2, borderRadius: 99, border: "2px solid " + MINT }}><Avatar letter="L" from="#4a4a4a" to="#8a8a8a" dim={24} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 8.5, color: "var(--greyscale-dark)", whiteSpace: "nowrap" }}>Lorem Ipsum</span><Row style={{ gap: 3 }}><span style={{ color: "var(--greyscale-dark)", display: "inline-flex" }}><Icon name="medal" size={8} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 7.5, color: "var(--greyscale-dark)" }}>15450pt</span></Row></div><div style={{ flex: 1, padding: "10px 10px", display: "flex", flexDirection: "column", gap: 5, justifyContent: "center" }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 13, color: "var(--greyscale-dark)", lineHeight: 1 }}>Ciao Lorem</span><Line w="70%" h={5} /></div></div>),
+    profilo_sidebar: () => (<div style={{ width: "100%", display: "flex", alignItems: "stretch", gap: 0, background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-card)", overflow: "hidden" }}><div style={{ width: "46%", borderRight: "1px solid var(--greyscale-extralight)", padding: "8px 6px", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}><span style={{ display: "inline-flex", padding: 2, borderRadius: 99, border: "2px solid " + MINT }}><Avatar letter="M" from="#4a4a4a" to="#8a8a8a" dim={24} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 800, fontSize: 8.5, color: "var(--greyscale-dark)", whiteSpace: "nowrap" }}>Mario Rossi</span><Row style={{ gap: 3 }}><span style={{ color: "var(--greyscale-dark)", display: "inline-flex" }}><Icon name="medal" size={8} /></span><span style={{ fontFamily: "var(--font-paragraph)", fontWeight: 700, fontSize: 7.5, color: "var(--greyscale-dark)" }}>15450pt</span></Row></div><div style={{ flex: 1, padding: "10px 10px", display: "flex", flexDirection: "column", gap: 5, justifyContent: "center" }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 13, color: "var(--greyscale-dark)", lineHeight: 1 }}>Ciao Mario</span><Line w="70%" h={5} /></div></div>),
     carriera_lavoro: () => { const OC = ({ ic, t }) => (<div style={{ flex: 1, minWidth: 0, background: WHITE, borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-card)", padding: "7px 7px", display: "flex", flexDirection: "column", gap: 5 }}><Row style={{ justifyContent: "space-between", alignItems: "flex-start", gap: 4 }}><span style={{ width: 22, height: 22, borderRadius: 6, background: "var(--orange-100)", color: "var(--orange-600)", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={ic} size={11} /></span><Chip c={MINTL} fg={MINTD}>Corso Opzionale</Chip></Row><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 9.5, color: "var(--greyscale-dark)", lineHeight: 1.1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t}</span><Row style={{ gap: 4 }}><span style={{ color: LT, display: "inline-flex" }}><Icon name="clock" size={8} /></span><Line w="54%" h={4} /></Row><Row style={{ gap: 4 }}><span style={{ color: LT, display: "inline-flex" }}><Icon name="medal" size={8} /></span><Line w="40%" h={4} /></Row></div>); return (<div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 5 }}><span style={{ fontFamily: "var(--font-title)", fontWeight: 800, fontSize: 9.5, color: "var(--greyscale-dark)" }}>Aumenta le possibilità di trovare lavoro</span><Row style={{ gap: 6, alignItems: "stretch" }}><OC ic="briefcase" t="Trovare Lavoro" /><OC ic="linkedin-in" t="LinkedIn" /></Row></div>); },
     resume_course: () => (<Panel><Row><IconChip name="angle-right" bg={PURP} fg={WHITE} dim={30} size={16} /><Col><Chip c={PURPL} fg={PURPD}>Riprendi</Chip><Line w="72%" /></Col><span style={{ width: 34, height: 34, borderRadius: "var(--radius-md)", background: PURPL, display: "inline-flex", alignItems: "center", justifyContent: "center", color: PURPD, flexShrink: 0 }}><Icon name="book-bookmark" size={15} /></span></Row></Panel>),
     project_status: () => (<Panel><Line w="34%" h={5} /><Row style={{ flexWrap: "wrap", gap: 5 }}><Chip c="var(--blue-100)" fg="var(--blue-600)">Inviati</Chip><Chip c="var(--yellow-100)" fg="var(--yellow-600)">In correzione</Chip><Chip c="var(--green-100)" fg="var(--green-600)">Corretti</Chip><Chip c="var(--red-100)" fg="var(--red-600)">Da rifare</Chip></Row></Panel>),
@@ -267,7 +270,10 @@
     </Row>
   );
   function CustomScene({ text }) {
-    const t = (text || "").toLowerCase();
+    // Normalizza maiuscole e accenti, così "attività" e "attivita" contano uguale
+    const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const t = norm(text);
+    const words = t.split(/[^a-z0-9]+/).filter(Boolean);
     // Riconoscimento a punteggio: ogni categoria somma le parole-chiave trovate
     // e vince quella con più riscontri (non più il primo match della catena).
     const KEYWORDS = {
@@ -284,7 +290,14 @@
       video:     ["video", "live", "webinar", "registrazion", "streaming", "puntat", "rivedere", "replay"],
       ai:        ["intelligenza artificiale", "assistente", "chatbot", "su misura", "personalizz", "automatic", "genera per me"],
     };
-    const scores = Object.keys(KEYWORDS).map((k) => [k, KEYWORDS[k].filter((w) => t.includes(w)).length]);
+    // Le parole singole valgono solo a inizio parola (niente falsi positivi tipo
+    // "appunti" che accende "punt"); le frasi intere valgono doppio.
+    const kwScore = (w) => {
+      const kw = norm(w);
+      if (kw.indexOf(" ") >= 0 || kw.indexOf("-") >= 0) return t.indexOf(kw) >= 0 ? 2 : 0;
+      return words.some((tok) => tok === kw || (kw.length >= 4 && tok.indexOf(kw) === 0)) ? 1 : 0;
+    };
+    const scores = Object.keys(KEYWORDS).map((k) => [k, KEYWORDS[k].reduce((s, w) => s + kwScore(w), 0)]);
     if (/\bai\b/.test(t)) scores.find((s) => s[0] === "ai")[1] += 1;
     scores.sort((a, b) => b[1] - a[1]);
     const cat = scores[0] && scores[0][1] > 0 ? scores[0][0] : "generic";
@@ -1175,7 +1188,7 @@
   // ═══════════════════════════════════════════════════════════
   const FLOW_STEPS = ["ingresso", "discovery", "ponte", "buy", "custom", "reward", "seme"];
   const FLOW_PHASE = { ingresso: "Prologo", discovery: "Fase 1", ponte: "Atto 2", buy: "Fase 2", custom: "Fase 3", reward: "Fase 4", seme: "Capitolo finale" };
-  const FLOW_LABELS = { ingresso: "Il risveglio", discovery: "Salva dalle fiamme", ponte: "La domanda", buy: "Ricostruisci", custom: "Il pezzo che manca", confirm: "L'architetto", reward: "La casa che hai costruito", seme: "Il seme" };
+  const FLOW_LABELS = { ingresso: "Il risveglio", discovery: "Salva dalle fiamme", ponte: "La domanda", buy: "Ricostruisci", custom: "Il pezzo che manca", confirm: "L'architetto", reward: "La casa che hai costruito", seme: "Il germoglio" };
   const COVER_ROCKETS = [
     { x: "8%", y: "16%", c: "#6E5DC6", s: 50, rot: -18, d: "0s" },
     { x: "84%", y: "12%", c: "#007369", s: 40, rot: 22, d: "0.6s" },
@@ -1214,7 +1227,7 @@
       h("button", { type: "button", "aria-label": "Chiudi", onClick: (e) => { e.stopPropagation(); onClose(); }, style: { position: "fixed", top: 18, right: 22, zIndex: 2, width: 44, height: 44, borderRadius: "50%", border: "none", background: "rgba(255,255,255,0.94)", color: "#1A1A2E", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 24px rgba(0,0,0,0.35)" } }, h(DSIcon, { name: "xmark", size: 20 })),
       h("div", { className: "baf-shot-modal", onClick: (e) => e.stopPropagation(),
         style: { width: "min(1000px, 90vw)", maxHeight: "88vh", overflow: "auto", borderRadius: 12, boxShadow: "0 30px 80px -20px rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.15)", background: "#fff", WebkitOverflowScrolling: "touch" } },
-        h("img", { src: "assets/home-piattaforma.jpg", alt: "Home Studenti in piattaforma", title: zoom ? "Clicca per ridurre" : "Clicca per ingrandire", onClick: (e) => { e.stopPropagation(); setZoom((v) => !v); },
+        h("img", { src: "assets/dashboard-oscurato.png", alt: "Home Studenti in piattaforma", title: zoom ? "Clicca per ridurre" : "Clicca per ingrandire", onClick: (e) => { e.stopPropagation(); setZoom((v) => !v); },
           style: { display: "block", width: zoom ? "165%" : "100%", maxWidth: zoom ? "none" : "100%", height: "auto", cursor: zoom ? "zoom-out" : "zoom-in" } })));
   }
 
@@ -1286,11 +1299,11 @@
         h("span", { className: "head" })) : null,
       // beat 2: la Home di oggi, lo "screen" appeso nel cielo — click per il full page
       i === 1 ? h("div", { className: "baf-story-shot", onClick: (e) => { e.stopPropagation(); setHomeOpen(true); } },
-        h("img", { src: "assets/home-piattaforma.jpg", alt: "La Home di oggi" }),
+        h("img", { src: "assets/dashboard-oscurato.png", alt: "La Home di oggi" }),
         h("span", { className: "hint" }, h(DSIcon, { name: "eye", size: 13 }), "Clicca per vederla a tutto schermo")) : null,
       // beat 4: la stessa Home che va a fuoco, in trasparenza nel cielo
       i === 3 ? h("div", { className: "baf-story-shot baf-story-shot-burn", "aria-hidden": "true" },
-        h("img", { src: "assets/home-piattaforma.jpg", alt: "" }),
+        h("img", { src: "assets/dashboard-oscurato.png", alt: "" }),
         h("span", { className: "burnveil" }),
         h("span", { className: "flames" }, h("i", null), h("i", null), h("i", null), h("i", null), h("i", null))) : null,
       catIn ? h("div", { className: "baf-story-smokeveil", "aria-hidden": "true" },
@@ -1428,13 +1441,13 @@
           ? h("div", { className: "baf-seme-typ", onClick: (e) => e.stopPropagation() },
               seed("baf-seed-typ"),
               h("div", { className: "k" }, "Hai guadagnato"),
-              h("div", { className: "big" }, "Seme"),
+              h("div", { className: "big" }, "Germoglio"),
               h("p", { className: "line" }, "Un nuovo inizio da piantare accanto alla tua casa."),
-              h("button", { className: "baf-cta baf-seme-btn", onClick: () => setI(4) }, "Pianta il seme"))
+              h("button", { className: "baf-cta baf-seme-btn", onClick: () => setI(4) }, "Pianta il germoglio"))
           : i === 4
           ? h(React.Fragment, null,
-              h("p", { className: "line" }, "Il seme è nella terra, accanto alla tua casa nuova. Ora ha bisogno di te."),
-              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); setI(5); } }, "Innaffia il seme"))
+              h("p", { className: "line" }, "Il germoglio è nella terra, accanto alla tua casa nuova. Ora ha bisogno di te."),
+              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); setI(5); } }, "Innaffia il germoglio"))
           : i === 5
           ? h(React.Fragment, null,
               h("p", { className: "line" }, "Lo studente annaffia la piantina con cura, mentre pensa tra sé e sé…"),
@@ -1442,7 +1455,7 @@
           : i === 6
           ? h(React.Fragment, null,
               h("h1", { className: "baf-seme-q baf-seme-ask" }, "Una piantina si cura un po' ogni giorno."),
-              h("p", { className: "line baf-seme-subq" }, "Come questo seme ha bisogno d'acqua per crescere, anche tu hai bisogno di qualcosa ogni giorno. Da studente, cosa vorresti trovare tornando in Home per sentirti nutrito, motivato e sostenuto, anche nei giorni storti?"),
+              h("p", { className: "line baf-seme-subq" }, "Come questo germoglio ha bisogno d'acqua per crescere, anche tu hai bisogno di qualcosa ogni giorno. Da studente, cosa vorresti trovare tornando in Home per sentirti nutrito, motivato e sostenuto, anche nei giorni storti?"),
               h("textarea", { className: "baf-seme-field", rows: 3, placeholder: "Una riga, se ti va. Oppure resta in silenzio e prosegui.", value: value, onChange: (e) => onChange(e.target.value), onClick: (e) => e.stopPropagation() }),
               h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(7); } }, value.trim() ? "Lascia la tua acqua" : "Prosegui"),
               h("button", { className: "baf-seme-skip", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(7); } }, "Prosegui senza scrivere"))
@@ -1542,7 +1555,7 @@
   // ── Riga catalogo del negozio (step buy) ───────────────────
   // Riga compatta: nome + prezzo + compra. Click sulla riga per aprire
   // il dropdown con l'anteprima e la spiegazione di cosa fa il componente.
-  function BuyRow({ f, on, aff, blocked, onToggle }) {
+  function BuyRow({ f, on, aff, blocked, onToggle, note, onNote }) {
     const [open, setOpen] = React.useState(false);
     return React.createElement("div", { className: "baf-lrow2" + (on ? " on" : "") + (!on && !aff ? " dim" : "") + (blocked ? " baf-shake" : "") + (open ? " open" : "") },
       React.createElement("div", { className: "baf-lrow2-head", role: "button", tabIndex: 0, "aria-expanded": open, onClick: () => setOpen((v) => !v), onKeyDown: (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setOpen((v) => !v); } } },
@@ -1552,6 +1565,9 @@
         React.createElement("button", { className: "baf-toggle baf-lrow2-btn " + (on ? "baf-owned" : aff ? "baf-buy" : "baf-disabled"), onClick: (e) => { e.stopPropagation(); onToggle(); } },
           React.createElement(DSIcon, { name: on ? "check" : "plus", size: 13 }), on ? "Nel carrello" : (aff ? "Compra" : "Budget finito")),
         React.createElement("span", { className: "baf-lrow2-chev" }, React.createElement(DSIcon, { name: "chevron-down", size: 13 }))),
+      on ? React.createElement("div", { className: "baf-lrow2-note" },
+        React.createElement("div", { className: "k" }, "Cosa puoi dirci di più? ", React.createElement("span", { className: "opt" }, "facoltativo")),
+        React.createElement("textarea", { rows: 2, placeholder: "Racconta perché lo hai scelto o come lo immagini.", value: note || "", onChange: (e) => onNote(e.target.value), onClick: (e) => e.stopPropagation() })) : null,
       open ? React.createElement("div", { className: "baf-lrow2-body" },
         React.createElement("div", { className: "baf-lrow2-thumb" }, React.createElement(ModuleThumb, { id: f.id, big: true })),
         React.createElement("div", { className: "baf-lrow2-what" },
@@ -1586,7 +1602,8 @@
 
   // ── Modale della modalità speciale ─────────────────────────
   function SpecialModal({ answers, onAnswer, onClose, points }) {
-    const answered = SPECIAL_QS.filter((q) => answers[q.id] != null).length;
+    const filled = (v) => (v || "").trim().length > 2;
+    const answered = SPECIAL_QS.filter((q) => filled(answers[q.id])).length;
     return React.createElement("div", { className: "baf-sp-overlay" },
       React.createElement("div", { className: "baf-sp-modal", role: "dialog", "aria-label": "Modalità speciale" },
         React.createElement("button", { type: "button", className: "baf-sp-x", "aria-label": "Chiudi", onClick: onClose }, React.createElement(DSIcon, { name: "xmark", size: 16 })),
@@ -1595,19 +1612,19 @@
           React.createElement("div", null,
             React.createElement("div", { className: "baf-sp-name" }, "Aster"),
             React.createElement("div", { className: "baf-sp-title" }, "Modalità speciale · recupera punti"))),
-        React.createElement("p", { className: "baf-sp-intro" }, "Sei uscito dalle fiamme quasi a mani vuote: parti da ", React.createElement("b", null, "40 punti"), " di base. Ogni risposta ti fa recuperare ", React.createElement("b", null, "+" + SPECIAL_STEP + " pt"), ": rispondi a tutte e arrivi fino a ", React.createElement("b", null, (40 + SPECIAL_QS.length * SPECIAL_STEP) + " pt"), " di budget per ricostruire la casa."),
+        React.createElement("p", { className: "baf-sp-intro" }, "I punti scarseggiano! Qui non serve immedesimarsi: raccontaci il punto di vista tuo e del tuo team. Ogni risposta ti fa recuperare ", React.createElement("b", null, "+" + SPECIAL_STEP + " pt"), ": rispondi a tutte e recuperi fino a ", React.createElement("b", null, "+" + (SPECIAL_QS.length * SPECIAL_STEP) + " pt"), " per ricostruire la casa."),
         React.createElement("div", { className: "baf-sp-body" },
-          SPECIAL_QS.map((q, qi) => React.createElement("div", { key: q.id, className: "baf-sp-q" + (answers[q.id] != null ? " done" : "") },
+          SPECIAL_QS.map((q, qi) => React.createElement("div", { key: q.id, className: "baf-sp-q" + (filled(answers[q.id]) ? " done" : "") },
             React.createElement("div", { className: "baf-sp-qh" },
-              React.createElement("span", { className: "baf-sp-qn" }, answers[q.id] != null ? React.createElement(DSIcon, { name: "check", size: 12 }) : (qi + 1)),
+              React.createElement("span", { className: "baf-sp-qn" }, filled(answers[q.id]) ? React.createElement(DSIcon, { name: "check", size: 12 }) : (qi + 1)),
               React.createElement("span", { className: "t" }, q.q),
               React.createElement("span", { className: "pts" }, "+", SPECIAL_STEP)),
-            React.createElement("div", { className: "baf-sp-opts" },
-              q.opts.map((o) => React.createElement("button", { key: o, type: "button", className: "baf-sp-opt", "aria-pressed": answers[q.id] === o, onClick: () => onAnswer(q.id, o) }, o)))))),
+            React.createElement("div", { className: "baf-sp-open" },
+              React.createElement("textarea", { rows: 2, placeholder: q.ph || "Scrivi qui la tua risposta…", value: answers[q.id] || "", onChange: (e) => onAnswer(q.id, e.target.value) }))))),
         React.createElement("div", { className: "baf-sp-foot" },
           React.createElement("div", { className: "baf-sp-tot" },
             React.createElement(DSIcon, { name: "credit-card", size: 16 }),
-            React.createElement("span", null, "Budget: ", React.createElement("b", null, points), " / ", (40 + SPECIAL_QS.length * SPECIAL_STEP), " pt")),
+            React.createElement("span", null, "Punti disponibili: ", React.createElement("b", null, points), " pt")),
           React.createElement("button", { type: "button", className: "baf-cta baf-sp-go", onClick: onClose }, answered ? "Entra nel negozio" : "Salta e entra"))));
   }
 
@@ -1699,10 +1716,11 @@
     const [specialOpen, setSpecialOpen] = React.useState(false);
     const [specialSeen, setSpecialSeen] = React.useState(false);
     const [certOpen, setCertOpen] = React.useState(false);
+    const [buyNotes, setBuyNotes] = React.useState({});
     const [homeOpen, setHomeOpen] = React.useState(false);
     const [discoveryDone, setDiscoveryDone] = React.useState(false);
     const answerSpecial = (qid, val) => setSpecial((s) => Object.assign({}, s, { [qid]: val }));
-    const bonusPoints = Math.min(Object.keys(special).length * SPECIAL_STEP, SPECIAL_QS.length * SPECIAL_STEP);
+    const bonusPoints = Math.min(SPECIAL_QS.filter((q) => ((special[q.id] || "").trim().length > 2)).length * SPECIAL_STEP, SPECIAL_QS.length * SPECIAL_STEP);
     // Stato invio: "idle" | "sending" | "sent" | "error".
     const [sendStatus, setSendStatus] = React.useState("idle");
     const feedbackDone = React.useRef(false); // true solo dopo un invio riuscito
@@ -1732,9 +1750,10 @@
         payload["[Vecchia Home] " + m.name] = val;
       });
       // Modalità speciale — domande di recupero punti
-      SPECIAL_QS.forEach((q) => { if (special[q.id] != null) payload[q.q] = special[q.id]; });
+      SPECIAL_QS.forEach((q) => { const v = (special[q.id] || "").trim(); if (v) payload[q.q] = v; });
       // Fase 2 — ricostruzione della nuova casa
       payload["Materiali scelti per la nuova casa"] = cartNames.length ? cartNames.join(", ") : "(nessuno)";
+      cartIds.forEach((x) => { const n = (buyNotes[x] || "").trim(); if (n) payload["[Nuova casa] " + byId[x].name + " · commento"] = n; });
       payload["Punti spesi"] = cartSpent + " / " + total + " pt";
       payload["Archetipo della casa"] = (ARCH[computeArch(cartIds)] || ARCH.cabina).title;
       if (custom.text.trim()) payload["Pezzo su misura richiesto"] = custom.text.trim();
@@ -1967,18 +1986,18 @@
           React.createElement("h1", null, "Ricostruisci la tua casa"),
           React.createElement("div", { className: "baf-obj" },
             React.createElement("span", { className: "baf-obj-k" }, React.createElement(DSIcon, { name: "flag", size: 12 }), "Obiettivo"),
-            React.createElement("p", null, "Spendi i punti per i materiali che contano davvero: il budget non basta per tutto, ogni acquisto è una priorità. Apri una riga per scoprire cosa fa."))),
+            React.createElement("p", null, "Spendi i punti per i materiali che contano davvero: il budget non basta per tutto, ogni acquisto è una priorità. Espandi le righe per avere maggiori informazioni."))),
         React.createElement("div", { className: "baf-board" },
           React.createElement("div", { className: "baf-list baf-alist baf-alist-scroll" },
             CATALOG.map((f) => {
               const on = cart.has(f.id), aff = on || f.price <= left;
-              return React.createElement(BuyRow, { key: f.id, f: f, on: on, aff: aff, blocked: blocked === f.id, onToggle: () => toggle(f.id) });
+              return React.createElement(BuyRow, { key: f.id, f: f, on: on, aff: aff, blocked: blocked === f.id, onToggle: () => toggle(f.id), note: buyNotes[f.id], onNote: (t) => setBuyNotes((s) => Object.assign({}, s, { [f.id]: t })) });
             }))),
         React.createElement("div", { className: "baf-flow-cta" },
           React.createElement("div", { className: "info" },
             React.createElement("div", { className: "t" }, ids.length ? `${ids.length} materiali · ${spent} pt` : "La casa è ancora vuota"),
             React.createElement("div", { className: "s" }, ids.length ? "Puoi ancora cambiare idea" : "Ricostruisci ciò che conta di più")),
-          (cassa === 0 && bonusPoints < SPECIAL_QS.length * SPECIAL_STEP) ? React.createElement("button", { className: "baf-cta baf-cta-ghost", onClick: () => setSpecialOpen(true) }, React.createElement(DSIcon, { name: "gem", size: 14 }), "Recupera punti") : null,
+          (left < 40 && bonusPoints < SPECIAL_QS.length * SPECIAL_STEP) ? React.createElement("button", { className: "baf-cta baf-cta-ghost", onClick: () => setSpecialOpen(true) }, React.createElement(DSIcon, { name: "gem", size: 14 }), "Recupera punti") : null,
           React.createElement("button", { className: "baf-cta" + (ids.length ? "" : " off"), onClick: () => ids.length && go("custom") }, "Continua")));
     } else if (step === "custom") {
       body = React.createElement("div", { className: "baf-flow" },
@@ -2089,7 +2108,7 @@
       buy: React.createElement(React.Fragment, null,
         React.createElement("strong", { className: "baf-aster-title" }, "Il negozio è aperto"),
         React.createElement("p", null, "Hai ", React.createElement("b", null, total, " pt"), ": 40 di base + " + (cassa + bonusPoints) + " recuperati."),
-        React.createElement("p", { className: "baf-aster-note" }, "Apri una riga per scoprire cosa fa. Compra e rivendi finché non torna il progetto.")),
+        React.createElement("p", { className: "baf-aster-note" }, "Espandi le righe per avere maggiori informazioni. Compra e rivendi finché non torna il progetto.")),
       custom: React.createElement(React.Fragment, null,
         React.createElement("strong", { className: "baf-aster-title" }, "Manca qualcosa?"),
         React.createElement("p", null, "Se nel negozio non c'era, descrivilo: te lo disegno al volo con i materiali di start2impact.")),
@@ -2113,10 +2132,10 @@
     } else {
       railWallet = React.createElement("div", { className: "baf-rail-wallet" },
         React.createElement("div", { className: "k" }, React.createElement(DSIcon, { name: "credit-card", size: 14 }), "Budget disponibile"),
-        React.createElement("div", { className: "num" }, React.createElement("span", { className: "big" }, React.createElement(AnimatedNumber, { value: left })), " / ", total, " pt"),
-        React.createElement("div", { className: "meter" }, React.createElement("i", { style: { width: (total ? (spent / total) * 100 : 0) + "%" } })),
+        React.createElement("div", { className: "num" }, React.createElement("span", { className: "big" }, React.createElement(AnimatedNumber, { value: left })), " / ", (total - bonusPoints), " pt"),
+        React.createElement("div", { className: "meter" }, React.createElement("i", { style: { width: Math.min(100, ((total - bonusPoints) ? (spent / (total - bonusPoints)) * 100 : 0)) + "%" } })),
         // il budget scarseggia: proprio accanto al counter compare il recupero punti
-        (step === "buy" && cassa === 0 && left < 20 && bonusPoints < SPECIAL_QS.length * SPECIAL_STEP)
+        (step === "buy" && left < 40 && bonusPoints < SPECIAL_QS.length * SPECIAL_STEP)
           ? React.createElement("button", { type: "button", className: "baf-rail-recover", onClick: () => setSpecialOpen(true) },
               React.createElement(DSIcon, { name: "gem", size: 13 }), "Punti quasi finiti? Recuperane altri")
           : null);
@@ -2183,7 +2202,7 @@
       body,
       showRail ? rail : null,
       asterPanel,
-      specialOpen ? React.createElement(SpecialModal, { answers: special, onAnswer: answerSpecial, onClose: () => setSpecialOpen(false), points: total }) : null,
+      specialOpen ? React.createElement(SpecialModal, { answers: special, onAnswer: answerSpecial, onClose: () => setSpecialOpen(false), points: left }) : null,
       homeOpen ? React.createElement(HomeLightbox, { onClose: () => setHomeOpen(false) }) : null,
       !genioIntroDone ? React.createElement(GenioGuide, { intro: true, onDone: () => setGenioIntroDone(true) }) : null);
   }
