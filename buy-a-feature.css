@@ -2091,7 +2091,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
   .baf-cert-sheet { width: 100%; box-shadow: none; border-radius: 0; padding: 0; }
   @page { size: A4 landscape; margin: 12mm; }
 }
-.baf-seme-final-in { width: min(680px, 100%); max-height: 88vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 28px; }
+.baf-seme-final-in { width: min(680px, 100%); max-height: 88vh; overflow: hidden auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 28px; }
 .baf-seme-final-mark { width: 144px; height: auto; display: inline-flex; margin-bottom: 8px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12)); }
 .baf-seme-final-mark img { width: 100%; height: auto; object-fit: contain; }
 .baf-seme-final-k { font-family: var(--font-title); font-weight: 800; font-size: var(--label-3, 12px); letter-spacing: 0.16em; text-transform: uppercase; color: #b07a52; }
@@ -2514,7 +2514,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) { .baf-seme-starfield i { animation: none; } }
 
 /* il cast del racconto, in basso, che saluta */
-.baf-final-cast { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1; height: 150px; display: flex; align-items: flex-end; justify-content: center; gap: clamp(22px, 8vw, 110px); padding-bottom: 14px; pointer-events: none; }
+.baf-final-cast { position: relative; z-index: 1; height: 116px; display: flex; align-items: flex-end; justify-content: center; gap: clamp(6px, 2.5vw, 22px); margin-top: 20px; transform: scale(0.9); transform-origin: center bottom; pointer-events: none; }
 .baf-final-cast .cast { position: relative; width: 66px; height: 128px; filter: url(#baf-rough-soft); }
 .baf-final-cast .cast i { position: absolute; }
 @keyframes baf-wave { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-26deg); } }
@@ -2547,7 +2547,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .cast.oldlady .staff { bottom: 0; right: 2px; width: 4px; height: 98px; border-radius: 3px; background: linear-gradient(90deg, #8a5a34, #b9834f 50%, #7c4e2c); }
 .cast.oldlady .staff::before { content: ""; position: absolute; top: -6px; left: -5px; width: 12px; height: 12px; border: 3px solid #7c4e2c; border-radius: 99px 99px 2px 99px; border-bottom-color: transparent; transform: rotate(20deg); }
 /* la card del ringraziamento sopra il cast */
-.baf-seme-final-in { position: relative; z-index: 2; padding-bottom: 190px; }
+.baf-seme-final-in { position: relative; z-index: 2; }
 @media (prefers-reduced-motion: reduce) { .baf-final-cast .cast i, .baf-final-cast .cast, .baf-final-stars i { animation: none !important; } }
 
 /* Logo start2impact sulla casa dello studente (Capitolo 0 1/5 e capitolo finale) */

@@ -1503,12 +1503,6 @@
                 h("div", { className: "baf-final-stars" },
                   [["10%","9%"],["20%","5%"],["30%","14%"],["42%","7%"],["52%","16%"],["62%","5%"],["70%","12%"],["80%","8%"],["88%","17%"],["94%","6%"],["6%","20%"],["15%","24%"],["26%","28%"],["37%","22%"],["48%","26%"],["58%","30%"],["66%","23%"],["74%","28%"],["84%","32%"],["92%","26%"],["12%","44%"],["34%","40%"],["55%","46%"],["78%","42%"],["90%","48%"],["8%","56%"],["28%","60%"],["50%","58%"],["68%","62%"],["86%","57%"],["18%","72%"],["40%","70%"],["60%","74%"],["82%","72%"],["24%","84%"],["46%","88%"],["66%","85%"],["88%","82%"]].map((p, k) =>
                     h("i", { key: k, style: { left: p[0], top: p[1], animationDelay: ((k % 9) * 0.35) + "s" } })))),
-              // in basso: i personaggi del racconto che salutano (in CSS)
-              h("div", { className: "baf-final-cast", "aria-hidden": "true" },
-                h("span", { className: "cast stud" }, h("i", { className: "arm" }), h("i", { className: "body" }), h("i", { className: "head" })),
-                h("span", { className: "cast aster" }, h("i", { className: "halo" }), h("i", { className: "ears" }), h("i", { className: "dot" }), h("i", { className: "eyes" })),
-                h("span", { className: "cast shop" }, h("i", { className: "arm" }), h("i", { className: "body" }), h("i", { className: "apron" }), h("i", { className: "head" })),
-                h("span", { className: "cast oldlady" }, h("i", { className: "staff" }), h("i", { className: "arm" }), h("i", { className: "body" }), h("i", { className: "head" }))),
               h("div", { className: "baf-paper", "aria-hidden": "true" }),
               h("div", { className: "baf-paper2", "aria-hidden": "true" }),
               h("div", { className: "baf-seme-final-in", onClick: (e) => e.stopPropagation() },
@@ -1532,7 +1526,13 @@
                 h("div", { className: "baf-seme-actions" },
                   h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); onDownload && onDownload(); } }, h(DSIcon, { name: "download", size: 15 }), "Scarica il certificato"),
                   h("button", { className: "baf-cta baf-cta-ghost baf-seme-btn", onClick: (e) => { e.stopPropagation(); onDone && onDone(); } }, "Chiudi il gioco"),
-                  h("a", { className: "baf-seme-secondary", href: "https://mail.google.com/mail/?view=cm&fs=1&to=arianna@start2impact.com,sara@start2impact.com&su=" + encodeURIComponent("Feedback per il Team Design \u2013 La nuova Casa"), target: "_blank", rel: "noopener noreferrer", onClick: (e) => e.stopPropagation() }, "Vuoi lasciare un feedback al team design?"))))));
+                  h("a", { className: "baf-seme-secondary", href: "https://mail.google.com/mail/?view=cm&fs=1&to=arianna@start2impact.com,sara@start2impact.com&su=" + encodeURIComponent("Feedback per il Team Design \u2013 La nuova Casa"), target: "_blank", rel: "noopener noreferrer", onClick: (e) => e.stopPropagation() }, "Vuoi lasciare un feedback al team design?")),
+                // i personaggi del racconto che salutano, in fila sotto il contenuto
+                h("div", { className: "baf-final-cast", "aria-hidden": "true" },
+                  h("span", { className: "cast stud" }, h("i", { className: "arm" }), h("i", { className: "body" }), h("i", { className: "head" })),
+                  h("span", { className: "cast aster" }, h("i", { className: "halo" }), h("i", { className: "ears" }), h("i", { className: "dot" }), h("i", { className: "eyes" })),
+                  h("span", { className: "cast shop" }, h("i", { className: "arm" }), h("i", { className: "body" }), h("i", { className: "apron" }), h("i", { className: "head" })),
+                  h("span", { className: "cast oldlady" }, h("i", { className: "staff" }), h("i", { className: "arm" }), h("i", { className: "body" }), h("i", { className: "head" })))))));
   }
 
   function GenioGuide({ intro, onDone, say }) {
