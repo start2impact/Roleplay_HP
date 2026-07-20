@@ -1369,21 +1369,32 @@
   function SemeScene({ value, onChange, onFinish, onDone, onDownload, sendStatus, onRetry, recap }) {
     const h = React.createElement;
     const [i, setI] = React.useState(0);
+    // Minigioco dell'innaffiatura: 3 innaffiate fanno spuntare il germoglio.
+    const WATER_GOAL = 3;
+    const [water, setWater] = React.useState(0);
+    const [pour, setPour] = React.useState(0); // >0 mentre l'acqua scende
+    const pourTimer = React.useRef(null);
+    React.useEffect(() => () => { if (pourTimer.current) clearTimeout(pourTimer.current); }, []);
+    const innaffia = () => {
+      if (water >= WATER_GOAL) return;
+      setWater((w) => w + 1);
+      setPour((n) => n + 1);
+      if (pourTimer.current) clearTimeout(pourTimer.current);
+      pourTimer.current = setTimeout(() => setPour(0), 900);
+    };
+    const sprouted = water >= WATER_GOAL;
     const advance = () => { if (i < 2) setI(i + 1); };
-    const cls = "baf-seme-scene seme-s" + i + (i >= 7 ? " seme-done seme-final" : "");
+    const cls = "baf-seme-scene seme-s" + i + (i >= 7 ? " seme-done seme-final" : "") + (sprouted ? " seme-sprouted" : "") + (pour ? " seme-pour" : "");
     const newHouse = h("div", { className: "baf-emporio baf-newhouse", "aria-hidden": "true" },
       h("span", { className: "chimney" }),
       h("span", { className: "roof" }),
       h("span", { className: "body" },
         h("span", { className: "win w1" }), h("span", { className: "win w2" }), h("span", { className: "door" }),
         h("span", { className: "baf-house-mark" }, h("img", { src: "uploads/grande-mercato-home/public/assets/logo/logo-black.svg", alt: "" }))));
+    // Il dono è un SEME vero e proprio (il germoglio si vede solo dopo il minigioco)
     const seed = (extra) => h("span", { className: "baf-seed " + extra, "aria-hidden": "true" },
       h("span", { className: "glow" }),
-      h("span", { className: "plant" },
-        h("i", { className: "pot" }),
-        h("i", { className: "stem" }),
-        h("i", { className: "leaf l" }),
-        h("i", { className: "leaf r" })));
+      h("span", { className: "kernel" }));
     return h("div", { className: cls, onClick: i < 2 ? advance : undefined },
       h("div", { className: "baf-seme-sky", "aria-hidden": "true" }),
       h("div", { className: "baf-seme-sun", "aria-hidden": "true" }),
@@ -1406,6 +1417,7 @@
       // il seme piantato accanto alla casa (dal beat della semina)
       (i === 4 || i === 5 || i === 6 || i === 7) ? h("div", { className: "baf-seme-plot", "aria-hidden": "true" },
         h("span", { className: "mound" }),
+        !sprouted ? h("span", { className: "seedling" + (water > 0 ? " shake" : ""), key: "sd" + water }) : null,
         h("span", { className: "sprout" }, h("i", { className: "stem" }), h("i", { className: "leaf l" }), h("i", { className: "leaf r" }))) : null,
       // la signora: alla porta con il dono, poi da sola col seme
       (i === 1 || i === 2) ? h("div", { className: "baf-walker baf-seme-walker", "aria-hidden": "true" },
@@ -1413,15 +1425,28 @@
         h("span", { className: "body" }),
         h("span", { className: "head" }, h("i", { className: "flower" }))) : null,
       i === 2 ? seed("baf-seed-scene") : null,
-      // beat 5: lo studente annaffia il seme con l'annaffiatoio
-      i === 5 ? h("div", { className: "baf-walker baf-seme-stud", "aria-hidden": "true" },
-        h("span", { className: "body" }),
-        h("span", { className: "head" })) : null,
-      i === 5 ? h("div", { className: "baf-seme-can", "aria-hidden": "true" },
-        h("span", { className: "handle" }),
-        h("span", { className: "can" }),
-        h("span", { className: "spout" }),
-        h("span", { className: "water" }, h("i", null), h("i", null), h("i", null))) : null,
+      // beat 5: il minigioco dell'innaffiatura, in una modale dedicata
+      i === 5 ? h("div", { className: "baf-mini-overlay" },
+        h("div", { className: "baf-mini-modal", role: "dialog", "aria-label": "Minigioco: innaffia il seme" },
+          h("div", { className: "k" }, "Minigioco"),
+          h("h2", null, sprouted ? "È spuntato un germoglio!" : "Innaffia il seme"),
+          h("div", { className: "baf-mini-stage", "aria-hidden": "true" },
+            h("span", { className: "mound" }),
+            !sprouted ? h("span", { className: "seedling" + (water > 0 ? " shake" : ""), key: "sd" + water }) : null,
+            h("span", { className: "sprout" + (sprouted ? " up" : "") }, h("i", { className: "stem" }), h("i", { className: "leaf l" }), h("i", { className: "leaf r" })),
+            !sprouted ? h("span", { className: "mini-can" + (pour ? " pouring" : "") },
+              h("i", { className: "handle" }), h("i", { className: "body" }), h("i", { className: "spout" }),
+              h("span", { className: "water" }, h("i", null), h("i", null), h("i", null))) : null),
+          h("p", { className: "line", key: "w" + water },
+            water === 0 ? "Il seme ha sete: ogni innaffiata lo sveglia un po' di più." :
+            water === 1 ? "Il seme si scuote… qualcosa si muove là sotto." :
+            water === 2 ? "Freme sempre più forte: ancora un po' d'acqua!" :
+            "Prenditene cura ogni giorno e crescerà con te."),
+          h("div", { className: "baf-water-meter", "aria-hidden": "true" },
+            [0, 1, 2].map((k) => h("i", { key: k, className: k < water ? "on" : "" }))),
+          !sprouted
+            ? h("button", { className: "baf-cta baf-seme-btn", onClick: innaffia }, "Innaffia il seme")
+            : h("button", { className: "baf-cta baf-seme-btn", onClick: () => setI(6) }, "Continua"))) : null,
       h("div", { className: "baf-fcaption baf-seme-cap", key: i },
         i === 0
           ? h(React.Fragment, null,
@@ -1441,22 +1466,25 @@
           ? h("div", { className: "baf-seme-typ", onClick: (e) => e.stopPropagation() },
               seed("baf-seed-typ"),
               h("div", { className: "k" }, "Hai guadagnato"),
-              h("div", { className: "big" }, "Germoglio"),
+              h("div", { className: "big" }, "Seme"),
               h("p", { className: "line" }, "Un nuovo inizio da piantare accanto alla tua casa."),
-              h("button", { className: "baf-cta baf-seme-btn", onClick: () => setI(4) }, "Pianta il germoglio"))
+              h("button", { className: "baf-cta baf-seme-btn", onClick: () => setI(4) }, "Pianta il seme"))
           : i === 4
           ? h(React.Fragment, null,
-              h("p", { className: "line" }, "Il germoglio è nella terra, accanto alla tua casa nuova. Ora ha bisogno di te."),
-              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); setI(5); } }, "Innaffia il germoglio"))
+              h("p", { className: "line" }, "Il seme è nella terra, accanto alla tua casa nuova. Ora ha bisogno di te."),
+              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); setI(5); } }, "Prendi l'annaffiatoio"))
           : i === 5
-          ? h(React.Fragment, null,
-              h("p", { className: "line" }, "Lo studente annaffia la piantina con cura, mentre pensa tra sé e sé…"),
-              h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); setI(6); } }, "Continua"))
+          ? null
           : i === 6
           ? h(React.Fragment, null,
-              h("h1", { className: "baf-seme-q baf-seme-ask" }, "Una piantina si cura un po' ogni giorno."),
-              h("p", { className: "line baf-seme-subq" }, "Come questo germoglio ha bisogno d'acqua per crescere, anche tu hai bisogno di qualcosa ogni giorno. Da studente, cosa vorresti trovare tornando in Home per sentirti nutrito, motivato e sostenuto, anche nei giorni storti?"),
-              h("textarea", { className: "baf-seme-field", rows: 3, placeholder: "Una riga, se ti va. Oppure resta in silenzio e prosegui.", value: value, onChange: (e) => onChange(e.target.value), onClick: (e) => e.stopPropagation() }),
+              h("div", { className: "k" }, "Un'ultima domanda"),
+              h("div", { className: "baf-seme-qvis", "aria-hidden": "true" },
+                h("span", { className: "drops" }, h("i", null), h("i", null), h("i", null)),
+                h("span", { className: "qsprout" }, h("i", { className: "stem" }), h("i", { className: "leaf l" }), h("i", { className: "leaf r" })),
+                h("span", { className: "qmound" })),
+              h("h1", { className: "baf-seme-q baf-seme-ask" }, "Il germoglio cresce solo con l'acqua di ogni giorno. Anche la nuova Home."),
+              h("p", { className: "line baf-seme-subq" }, "L'acqua della Home sono le piccole cose che trovi ogni volta che entri. Da studente, cosa vorresti trovarci ogni giorno per sentirti nutrito, motivato e sostenuto, anche nei giorni storti?"),
+              h("textarea", { className: "baf-seme-field", rows: 3, placeholder: "La tua acqua di ogni giorno: una riga, se ti va. Oppure resta in silenzio e prosegui.", value: value, onChange: (e) => onChange(e.target.value), onClick: (e) => e.stopPropagation() }),
               h("button", { className: "baf-cta baf-seme-btn", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(7); } }, value.trim() ? "Lascia la tua acqua" : "Prosegui"),
               h("button", { className: "baf-seme-skip", onClick: (e) => { e.stopPropagation(); onFinish && onFinish(); setI(7); } }, "Prosegui senza scrivere"))
           : h("div", { className: "baf-seme-final-overlay" },

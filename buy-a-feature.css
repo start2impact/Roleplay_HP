@@ -1462,6 +1462,27 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-seme-plot .mound { display: block; width: 48px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 50% 28%, #6c5860, #45383f); box-shadow: 0 4px 10px rgba(0,0,0,0.35); }
 .baf-seme-plot .sprout { position: absolute; left: 50%; bottom: 9px; transform: translateX(-50%) scaleY(0); transform-origin: bottom center; opacity: 0; transition: opacity 0.5s 0.4s ease-out, transform 0.7s 0.4s cubic-bezier(0.22,0.61,0.36,1); }
 .baf-seme-scene.seme-b1 .baf-seme-plot .sprout, .baf-seme-scene.seme-b2 .baf-seme-plot .sprout { opacity: 1; transform: translateX(-50%) scaleY(1); }
+/* Minigioco dell'innaffiatura: il seme visibile nella terra, che si scuote a ogni innaffiata */
+.baf-seme-plot .seedling { position: absolute; left: 50%; bottom: 9px; width: 11px; height: 14px; transform: translateX(-50%); transform-origin: bottom center; background: linear-gradient(160deg, #E2B04A, #8A5A24); border-radius: 50% 50% 46% 54% / 62% 58% 42% 38%; box-shadow: inset -2px -3px 0 rgba(0,0,0,0.18); animation: baf-seed-pop 0.45s ease-out; z-index: 2; }
+.baf-seme-plot .seedling.shake { animation: baf-seed-shake 0.65s ease-in-out; }
+@keyframes baf-seed-pop { from { transform: translateX(-50%) scale(0); } to { transform: translateX(-50%) scale(1); } }
+@keyframes baf-seed-shake {
+  0%, 100% { transform: translateX(-50%) rotate(0); }
+  15% { transform: translateX(calc(-50% - 4px)) rotate(-12deg); }
+  35% { transform: translateX(calc(-50% + 4px)) rotate(12deg); }
+  55% { transform: translateX(calc(-50% - 3px)) rotate(-8deg); }
+  75% { transform: translateX(calc(-50% + 2px)) rotate(6deg); }
+  90% { transform: translateX(calc(-50% - 1px)) rotate(-3deg); }
+}
+/* Dopo la terza innaffiata (e nei beat successivi) il germoglio resta spuntato */
+.baf-seme-scene.seme-sprouted .baf-seme-plot .sprout, .baf-seme-scene.seme-s6 .baf-seme-plot .sprout, .baf-seme-scene.seme-s7 .baf-seme-plot .sprout { opacity: 1; transform: translateX(-50%) scaleY(1); }
+/* L'annaffiatoio compare mentre l'acqua scende */
+.baf-seme-scene.seme-pour .baf-seme-can { opacity: 1; transition: opacity 0.12s ease-out; }
+/* Le tre goccioline di progresso nel riquadro del minigioco */
+.baf-water-meter { display: flex; gap: 9px; justify-content: center; margin: 10px 0 14px; }
+.baf-water-meter i { width: 13px; height: 13px; border-radius: 0 50% 50% 50%; transform: rotate(45deg); background: var(--ui-secondary, #F0F6F3); box-shadow: inset 0 0 0 1.5px var(--greyscale-light, #C9D1CE); transition: background 0.25s ease-out, box-shadow 0.25s ease-out; }
+.baf-water-meter i.on { background: #8FD0EE; box-shadow: inset 0 0 0 1.5px #5FB2DC, 0 0 10px rgba(143,208,238,0.6); }
+@media (prefers-reduced-motion: reduce) { .baf-seme-plot .seedling, .baf-seme-plot .seedling.shake { animation: none; } }
 .baf-seme-plot .stem { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 3px; height: 22px; border-radius: 2px; background: linear-gradient(180deg, #7ed08a, #3f8a52); }
 .baf-seme-plot .leaf { position: absolute; bottom: 14px; width: 12px; height: 8px; background: #5cb56c; border-radius: 0 80% 0 80%; }
 .baf-seme-plot .leaf.l { right: 50%; transform: rotate(-18deg); transform-origin: right center; }
@@ -2309,19 +2330,58 @@ a:hover { color: var(--accent-dark); text-decoration: underline; }
 .baf-seed { position: relative; display: inline-flex; align-items: center; justify-content: center; }
 .baf-seed .glow { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(255,235,170,0.85) 0%, rgba(255,220,140,0.35) 48%, transparent 72%); animation: baf-seedglow 2.4s ease-in-out infinite alternate; }
 @keyframes baf-seedglow { from { opacity: 0.75; transform: translate(-50%, -50%) scale(0.94); } to { opacity: 1; transform: translate(-50%, -50%) scale(1.06); } }
-.baf-seed .plant { position: relative; width: 46px; height: 52px; }
-.baf-seed .plant .pot { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 30px; height: 22px; border-radius: 4px 4px 8px 8px; background: linear-gradient(180deg, #c47a44, #8f4e24); box-shadow: 0 6px 14px rgba(60,40,15,0.35); }
-.baf-seed .plant .stem { position: absolute; bottom: 17px; left: 50%; transform: translateX(-50%); width: 3px; height: 26px; border-radius: 2px; background: linear-gradient(180deg, #7ed08a, #3f8a52); }
-.baf-seed .plant .leaf { position: absolute; bottom: 30px; width: 18px; height: 12px; background: radial-gradient(circle at 30% 30%, #8fdc98, #4aa564); border-radius: 0 90% 0 90%; }
-.baf-seed .plant .leaf.l { right: 50%; transform: rotate(-24deg); transform-origin: right center; }
-.baf-seed .plant .leaf.r { left: 50%; transform: rotate(24deg) scaleX(-1); transform-origin: left center; }
+.baf-seed .kernel { position: relative; display: block; width: 30px; height: 40px; background: linear-gradient(160deg, #E2B04A, #8A5A24); border-radius: 50% 50% 46% 54% / 62% 58% 42% 38%; box-shadow: inset -4px -5px 0 rgba(0,0,0,0.18), 0 6px 14px rgba(60,40,15,0.35); }
+.baf-seed .kernel::after { content: ""; position: absolute; left: 8px; top: 7px; width: 7px; height: 12px; border-radius: 50%; background: rgba(255,244,205,0.55); transform: rotate(18deg); }
 .baf-seed-scene { position: absolute; left: 56%; bottom: 39%; z-index: 5; animation: baf-seed-float 2.6s ease-in-out infinite alternate; }
 @keyframes baf-seed-float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 /* TYP del seme: "Hai guadagnato: SEME" */
 .baf-seme-typ { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 34px 44px 30px; border-radius: 26px; background: rgba(250,246,242,0.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 18px 50px rgba(50,34,44,0.25); cursor: default; animation: baf-typ-fade 0.5s ease-out; }
 @keyframes baf-typ-fade { from { opacity: 0; } to { opacity: 1; } }
 .baf-seme-typ .baf-seed-typ { margin-bottom: 6px; }
-.baf-seme-typ .baf-seed-typ .plant { transform: scale(1.3); }
+.baf-seme-typ .baf-seed-typ .kernel { transform: scale(1.3); }
+/* Visual della domanda finale: le gocce che nutrono il germoglio ogni giorno */
+.baf-seme-qvis { position: relative; width: 96px; height: 96px; margin: 8px auto 0; }
+.baf-seme-qvis .qmound { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 64px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 50% 28%, #6c5860, #45383f); }
+.baf-seme-qvis .qsprout { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); width: 40px; height: 48px; z-index: 2; }
+.baf-seme-qvis .qsprout .stem { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 4px; height: 38px; border-radius: 3px; background: linear-gradient(180deg, #7ed08a, #3f8a52); }
+.baf-seme-qvis .qsprout .leaf { position: absolute; bottom: 26px; width: 19px; height: 13px; background: radial-gradient(circle at 30% 30%, #8fdc98, #4aa564); border-radius: 0 90% 0 90%; }
+.baf-seme-qvis .qsprout .leaf.l { right: 50%; transform: rotate(-24deg); transform-origin: right center; }
+.baf-seme-qvis .qsprout .leaf.r { left: 50%; transform: rotate(24deg) scaleX(-1); transform-origin: left center; }
+.baf-seme-qvis .drops { position: absolute; left: 50%; top: 0; width: 12px; height: 40px; transform: translateX(-50%); z-index: 1; }
+.baf-seme-qvis .drops i { position: absolute; top: 0; width: 4px; height: 9px; border-radius: 3px; background: #6FBFE4; left: 0; animation: baf-seme-drip 1.1s linear infinite; }
+.baf-seme-qvis .drops i:nth-child(2) { left: 5px; animation-delay: 0.36s; }
+.baf-seme-qvis .drops i:nth-child(3) { left: 2px; animation-delay: 0.72s; }
+@media (prefers-reduced-motion: reduce) { .baf-seme-qvis .drops i { animation: none; opacity: 0.6; } }
+/* ── Minigioco dell'innaffiatura: modale dedicata ── */
+.baf-mini-overlay { position: fixed; inset: 0; z-index: 140; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(20,16,34,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.baf-mini-modal { width: min(430px, 94vw); max-height: 92vh; overflow: auto; background: var(--ui-primary, #fff); border-radius: 18px; padding: 22px 24px 24px; text-align: center; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.55); animation: baf-fade-op 0.3s ease-out; }
+.baf-mini-modal .k { font-family: var(--font-paragraph); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-secondary, #007369); }
+.baf-mini-modal h2 { margin: 4px 0 0; font-family: var(--font-title); font-weight: 800; font-size: 21px; color: var(--greyscale-dark, #25302D); }
+.baf-mini-modal .line { margin: 4px 0 2px; font-family: var(--font-paragraph); font-weight: 600; font-size: 14.5px; line-height: 1.5; color: var(--greyscale-mid, #5D7870); min-height: 44px; }
+.baf-mini-modal .baf-seme-btn { width: 100%; justify-content: center; }
+/* la scenetta: terra, seme, annaffiatoio */
+.baf-mini-stage { position: relative; width: 240px; height: 150px; margin: 12px auto 6px; background: linear-gradient(180deg, #DFF2FB 0%, #EAF7F1 70%, #D8EDE2 100%); border-radius: 14px; overflow: hidden; }
+.baf-mini-stage .mound { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); width: 96px; height: 30px; border-radius: 50%; background: radial-gradient(circle at 50% 28%, #6c5860, #45383f); box-shadow: 0 5px 12px rgba(0,0,0,0.25); }
+.baf-mini-stage .seedling { position: absolute; left: 50%; bottom: 34px; width: 20px; height: 26px; transform: translateX(-50%); transform-origin: bottom center; background: linear-gradient(160deg, #E2B04A, #8A5A24); border-radius: 50% 50% 46% 54% / 62% 58% 42% 38%; box-shadow: inset -3px -4px 0 rgba(0,0,0,0.18); animation: baf-seed-pop 0.45s ease-out; z-index: 2; }
+.baf-mini-stage .seedling.shake { animation: baf-seed-shake 0.65s ease-in-out; }
+.baf-mini-stage .sprout { position: absolute; left: 50%; bottom: 32px; transform: translateX(-50%) scaleY(0); transform-origin: bottom center; opacity: 0; transition: opacity 0.4s 0.15s ease-out, transform 0.7s 0.15s cubic-bezier(0.22,0.61,0.36,1); z-index: 2; }
+.baf-mini-stage .sprout.up { opacity: 1; transform: translateX(-50%) scaleY(1); }
+.baf-mini-stage .sprout .stem { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 5px; height: 44px; border-radius: 3px; background: linear-gradient(180deg, #7ed08a, #3f8a52); }
+.baf-mini-stage .sprout .leaf { position: absolute; bottom: 30px; width: 22px; height: 15px; background: radial-gradient(circle at 30% 30%, #8fdc98, #4aa564); border-radius: 0 90% 0 90%; }
+.baf-mini-stage .sprout .leaf.l { right: 50%; transform: rotate(-24deg); transform-origin: right center; }
+.baf-mini-stage .sprout .leaf.r { left: 50%; transform: rotate(24deg) scaleX(-1); transform-origin: left center; }
+/* l'annaffiatoio in alto a destra, si inclina quando versa */
+.baf-mini-stage .mini-can { position: absolute; right: 26px; top: 14px; width: 64px; height: 52px; transform: rotate(-10deg); transform-origin: 70% 80%; transition: transform 0.25s ease-out; }
+.baf-mini-stage .mini-can.pouring { transform: rotate(-30deg); }
+.baf-mini-stage .mini-can .body { position: absolute; bottom: 6px; right: 18px; width: 34px; height: 24px; border-radius: 5px 5px 8px 8px; background: linear-gradient(180deg, #4e8fb0, #2f6a86); }
+.baf-mini-stage .mini-can .handle { position: absolute; bottom: 24px; right: 22px; width: 24px; height: 14px; border: 4px solid #2f6a86; border-bottom: 0; border-radius: 12px 12px 0 0; }
+.baf-mini-stage .mini-can .spout { position: absolute; bottom: 18px; right: 48px; width: 18px; height: 5px; border-radius: 3px; background: #2f6a86; transform: rotate(28deg); transform-origin: right center; }
+.baf-mini-stage .mini-can .water { position: absolute; top: 40px; right: 60px; width: 8px; height: 40px; opacity: 0; }
+.baf-mini-stage .mini-can.pouring .water { opacity: 1; }
+.baf-mini-stage .mini-can .water i { position: absolute; width: 3px; height: 7px; border-radius: 3px; background: #6FBFE4; left: 0; animation: baf-seme-drip 0.55s linear infinite; }
+.baf-mini-stage .mini-can .water i:nth-child(2) { left: 4px; animation-delay: 0.18s; }
+.baf-mini-stage .mini-can .water i:nth-child(3) { left: 2px; animation-delay: 0.36s; }
+@media (prefers-reduced-motion: reduce) { .baf-mini-stage .mini-can .water i, .baf-mini-stage .seedling, .baf-mini-stage .seedling.shake { animation: none; } }
 .baf-seme-typ .k { font-family: var(--font-title); font-weight: 800; font-size: var(--label-3, 12px); letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a45; }
 .baf-seme-typ .big { font-family: var(--font-display, var(--font-title)); font-weight: 800; font-size: clamp(2rem, 6vw, 3rem); line-height: 1; color: #4a382c; }
 .baf-seme-typ .line { font-size: var(--paragraph-p2, 15px); color: #6a4e3e; font-style: italic; }
